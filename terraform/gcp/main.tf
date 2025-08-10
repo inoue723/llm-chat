@@ -29,6 +29,7 @@ module "project-services" {
     "iam.googleapis.com",
     "secretmanager.googleapis.com",
     "artifactregistry.googleapis.com",
-    "storage.googleapis.com"
+    "storage.googleapis.com",
+    "iap.googleapis.com"
   ]
 }
