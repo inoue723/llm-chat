@@ -13,38 +13,36 @@ export function meta({}: Route.MetaArgs) {
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
-  let name = formData.get("name");
-  let email = formData.get("email");
-  if (typeof name !== "string" || typeof email !== "string") {
-    return { guestBookError: "Name and email are required" };
+  let title = formData.get("title");
+  if (typeof title !== "string") {
+    return { guestBookError: "Title is required" };
   }
 
-  name = name.trim();
-  email = email.trim();
-  if (!name || !email) {
-    return { guestBookError: "Name and email are required" };
+  title = title.trim();
+  if (!title) {
+    return { chatsError: "Title is required" };
   }
 
   const db = database();
   try {
-    await db.insert(schema.guestBook).values({ name, email });
+    await db.insert(schema.chats).values({ title });
   } catch (error) {
-    return { guestBookError: "Error adding to guest book" };
+    return { chatsError: "Error adding to guest book" };
   }
 }
 
 export async function loader({ context }: Route.LoaderArgs) {
   const db = database();
 
-  const guestBook = await db.query.guestBook.findMany({
+  const chats = await db.query.chats.findMany({
     columns: {
       id: true,
-      name: true,
+      title: true,
     },
   });
 
   return {
-    guestBook,
+    chats,
     message: context.VALUE_FROM_EXPRESS,
   };
 }
@@ -52,8 +50,8 @@ export async function loader({ context }: Route.LoaderArgs) {
 export default function Home({ actionData, loaderData }: Route.ComponentProps) {
   return (
     <Welcome
-      guestBook={loaderData.guestBook}
-      guestBookError={actionData?.guestBookError}
+      chats={loaderData.chats}
+      chatsError={actionData?.chatsError}
       message={loaderData.message}
     />
   );

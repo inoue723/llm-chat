@@ -1,22 +1,23 @@
-FROM node:20-alpine AS development-dependencies-env
-COPY . /app
-WORKDIR /app
-RUN npm ci
+FROM node:22-alpine AS base
 
-FROM node:20-alpine AS production-dependencies-env
-COPY ./package.json package-lock.json /app/
-WORKDIR /app
-RUN npm ci --omit=dev
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN npm i -g corepack@latest && corepack enable
 
-FROM node:20-alpine AS build-env
+FROM base AS deps
 COPY . /app/
-COPY --from=development-dependencies-env /app/node_modules /app/node_modules
 WORKDIR /app
-RUN npm run build
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm --frozen-lockfile install
 
-FROM node:20-alpine
-COPY ./package.json package-lock.json server.js /app/
-COPY --from=production-dependencies-env /app/node_modules /app/node_modules
-COPY --from=build-env /app/build /app/build
+FROM deps AS build
+COPY . .
+RUN pnpm run --filter=web build --mode prod
+RUN pnpm --filter=web deploy --prod deploy/web
+
+FROM base AS runner
 WORKDIR /app
-CMD ["npm", "run", "start"]
+COPY --from=build /app/deploy/web/node_modules ./node_modules
+COPY --from=build /app/deploy/web/build ./build
+COPY --from=build /app/deploy/web/server.js ./server.js
+COPY --from=build /app/deploy/web/package.json ./package.json
+CMD ["pnpm", "start"]

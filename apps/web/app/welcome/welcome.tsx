@@ -4,15 +4,15 @@ import logoDark from "./logo-dark.svg";
 import logoLight from "./logo-light.svg";
 
 export function Welcome({
-  guestBook,
-  guestBookError,
+  chats,
+  chatsError,
   message,
 }: {
-  guestBook: {
-    name: string;
-    id: number;
+  chats: {
+    title: string;
+    id: string;
   }[];
-  guestBookError?: string;
+  chatsError?: string;
   message: string;
 }) {
   const navigation = useNavigation();
@@ -71,36 +71,30 @@ export function Welcome({
               }}
             >
               <input
-                name="name"
-                placeholder="Name"
+                name="title"
+                placeholder="Title"
                 required
                 className="w-full dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:focus:ring-blue-500 h-10 px-3 rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500"
               />
-              <input
-                name="email"
-                type="email"
-                placeholder="your@email.com"
-                required
-                className="w-full dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:focus:ring-blue-500 h-10 px-3 rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500"
-              />
+              
               <button
                 type="submit"
                 disabled={navigation.state === "submitting"}
                 className="w-full h-10 px-3 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
               >
-                Sign Guest Book
+                Add Chat
               </button>
-              {guestBookError && (
+              {chatsError && (
                 <p className="text-red-500 dark:text-red-400">
-                  {guestBookError}
+                  {chatsError}
                 </p>
               )}
             </Form>
             <ul className="text-center">
               {<li className="p-3">{message}</li>}
-              {guestBook.map(({ id, name }) => (
+              {chats.map(({ id, title }) => (
                 <li key={id} className="p-3">
-                  {name}
+                  {title}
                 </li>
               ))}
             </ul>
