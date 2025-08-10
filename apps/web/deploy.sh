@@ -1,9 +1,22 @@
 #!/bin/bash
 set -euxo pipefail
 
-LOCATION=asia-northeast1
-PROJECT_ID=llm-chat
-REPOSITORY_ID=llm-chat
+# Load environment variables from .env file if it exists
+if [ -f .env ]; then
+  export $(cat .env | grep -v '^#' | xargs)
+fi
+
+# Set default values if not provided in .env
+LOCATION=${LOCATION:-asia-northeast1}
+PROJECT_ID=${PROJECT_ID:-}
+REPOSITORY_ID=${REPOSITORY_ID:-llm-chat}
+
+# Check if PROJECT_ID is set
+if [ -z "$PROJECT_ID" ]; then
+  echo "Error: PROJECT_ID is not set. Please create a .env file with your project ID."
+  echo "You can copy env.example to .env and update the values."
+  exit 1
+fi
 
 # project rootに移動
 script_dir=$(
