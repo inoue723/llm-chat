@@ -1,7 +1,3 @@
-resource "random_id" "default" {
-  byte_length = 8
-}
-
 resource "google_storage_bucket" "terraform_state" {
   name          = "${random_id.default.hex}-terraform-remote-backend"
   location      = var.region
