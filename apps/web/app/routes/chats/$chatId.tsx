@@ -1,6 +1,7 @@
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { eq } from "drizzle-orm";
+import { SendIcon } from "lucide-react";
 import { useEffect } from "react";
 import { href } from "react-router";
 import { database } from "~/database/context";
@@ -41,7 +42,7 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
   useEffect(() => {
     const url = new URL(window.location.href);
     const shouldStart = url.searchParams.get("start") === "true";
-    
+
     if (shouldStart && messages.length > 0 && status === "ready") {
       const lastMessage = messages[messages.length - 1];
       if (lastMessage.role === "user") {
@@ -58,61 +59,139 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
   }, [messages]);
 
   return (
-    <div className="flex flex-col h-screen">
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className={`flex ${
-              message.role === "user" ? "justify-end" : "justify-start"
-            }`}
-          >
+    <>
+      <div className="overflow-y-auto">
+        <div className="space-y-6">
+          {messages.map((message) => (
             <div
-              className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+              key={message.id}
+              className={`group ${
                 message.role === "user"
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-gray-100"
+                  ? "bg-white dark:bg-gray-900"
+                  : "bg-gray-50 dark:bg-gray-800"
               }`}
             >
-              {message.parts.map((part, index) =>
-                part.type === "text" ? (
-                  <span key={`${message.id}-part-${index}`}>{part.text}</span>
-                ) : null,
-              )}
+              <div className="mx-auto max-w-4xl px-4 py-6">
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0">
+                    <div
+                      className={`flex h-8 w-8 items-center justify-center rounded-full ${
+                        message.role === "user"
+                          ? "bg-blue-600 text-white"
+                          : "bg-green-600 text-white"
+                      }`}
+                    >
+                      {message.role === "user" ? "あ" : "AI"}
+                    </div>
+                  </div>
+                  <div className="flex-1 space-y-2 overflow-hidden">
+                    <div className="font-semibold text-gray-900 dark:text-gray-100">
+                      {message.role === "user" ? "あなた" : "アシスタント"}
+                    </div>
+                    <div className="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200">
+                      {message.parts.map((part, index) =>
+                        part.type === "text" ? (
+                          <div
+                            key={`${message.id}-part-${index}`}
+                            className="whitespace-pre-wrap"
+                          >
+                            {part.text}
+                          </div>
+                        ) : null,
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+          {status === "streaming" && (
+            <div className="bg-gray-50 dark:bg-gray-800">
+              <div className="mx-auto max-w-4xl px-4 py-6">
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-600 text-white">
+                      AI
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                      アシスタント
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <div
+                        className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"
+                        style={{ animationDelay: "0ms" }}
+                      ></div>
+                      <div
+                        className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"
+                        style={{ animationDelay: "150ms" }}
+                      ></div>
+                      <div
+                        className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"
+                        style={{ animationDelay: "300ms" }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="border-t border-gray-200 dark:border-gray-700 p-4">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            const form = e.currentTarget;
-            const formData = new FormData(form);
-            const message = formData.get("message") as string;
-            if (message.trim()) {
-              sendMessage({ text: message });
-              form.reset();
-            }
-          }}
-          className="flex space-x-2"
-        >
-          <input
-            name="message"
-            placeholder="メッセージを入力..."
-            className="flex-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            disabled={status !== "ready"}
-          />
-          <button
-            type="submit"
-            disabled={status !== "ready"}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+      <div className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+        <div className="mx-auto max-w-4xl px-4 py-4">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const form = e.currentTarget;
+              const formData = new FormData(form);
+              const message = formData.get("message") as string;
+              if (message.trim()) {
+                sendMessage({ text: message });
+                form.reset();
+              }
+            }}
+            className="relative"
           >
-            送信
-          </button>
-        </form>
+            <div className="relative flex items-center">
+              <textarea
+                name="message"
+                placeholder="メッセージを入力..."
+                className="flex-1 resize-none rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-4 py-3 pr-12 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:border-gray-400 dark:focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-400 dark:focus:ring-gray-500"
+                disabled={status !== "ready"}
+                rows={1}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    const form = e.currentTarget.form;
+                    if (form) {
+                      const event = new Event("submit", {
+                        cancelable: true,
+                        bubbles: true,
+                      });
+                      form.dispatchEvent(event);
+                    }
+                  }
+                }}
+                onInput={(e) => {
+                  const target = e.currentTarget;
+                  target.style.height = "auto";
+                  target.style.height = `${Math.min(target.scrollHeight, 200)}px`;
+                }}
+              />
+              <button
+                type="submit"
+                disabled={status !== "ready"}
+                className="absolute right-2 rounded-lg p-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 disabled:opacity-50 disabled:hover:bg-transparent"
+              >
+                <SendIcon />
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

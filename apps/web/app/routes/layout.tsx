@@ -24,7 +24,11 @@ export default function Layout({ loaderData }: Route.ComponentProps) {
       {/* Mobile sidebar */}
       <MobileSidebar chats={chats} onNewChat={handleNewChat} />
 
-      <Outlet />
+      <div className="flex h-screen w-full justify-center py-8">
+        <div className="overflow-y-auto w-4xl">
+          <Outlet />
+        </div>
+      </div>
     </div>
   );
 }
