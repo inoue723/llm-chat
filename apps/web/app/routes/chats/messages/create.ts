@@ -18,12 +18,16 @@ export async function action({ request, params }: Route.ActionArgs) {
       .map((part) => part.text)
       .join(" ");
 
-    await db.insert(messages).values({
-      chatId,
-      text: userMessageText,
-      role: "user",
-      modelId: "user",
-    });
+    await db
+      .insert(messages)
+      .values({
+        id: lastUserMessage.id,
+        chatId,
+        text: userMessageText,
+        role: "user",
+        modelId: "user",
+      })
+      .onConflictDoNothing();
   }
 
   const result = streamText({
