@@ -1,6 +1,6 @@
 import { Form, redirect } from "react-router";
 import { database } from "~/database/context";
-import { chats } from "~/database/schema";
+import { chats, messages } from "~/database/schema";
 import type { Route } from "./+types/home";
 
 export function meta() {
@@ -10,7 +10,7 @@ export function meta() {
   ];
 }
 
-export async function action({ request, params }: Route.ActionArgs) {
+export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
   const message = formData.get("message") as string;
 
@@ -18,16 +18,24 @@ export async function action({ request, params }: Route.ActionArgs) {
     return { error: "メッセージを入力してください" };
   }
 
-  const newChat = await database()
+  const db = database();
+  const newChat = await db
     .insert(chats)
     .values({
       title: message,
     })
     .returning({ id: chats.id });
 
-  // todo: messageを保存する
+  const chatId = newChat[0].id;
 
-  return redirect(`/chats/${newChat[0].id}`);
+  await db.insert(messages).values({
+    chatId,
+    text: message,
+    role: "user",
+    modelId: "user", // TODO: modelidはtable分けたい
+  });
+
+  return redirect(`/chats/${chatId}?start=true`);
 }
 
 export default function Home({ actionData }: Route.ComponentProps) {

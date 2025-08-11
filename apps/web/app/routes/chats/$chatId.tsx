@@ -1,19 +1,30 @@
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
+import { eq } from "drizzle-orm";
 import { useEffect } from "react";
 import { href } from "react-router";
+import { database } from "~/database/context";
+import { messages } from "~/database/schema";
 import type { Route } from "./+types/$chatId";
 
-export const loader = async () => {
-  const messages: UIMessage[] = [
-    {
-      id: "1",
-      role: "user",
-      parts: [{ type: "text", text: "調子どう?" }],
-    },
-  ];
+export const loader = async ({ params }: Route.LoaderArgs) => {
+  const db = database();
+  const chatId = params.chatId;
+
+  const dbMessages = await db
+    .select()
+    .from(messages)
+    .where(eq(messages.chatId, chatId))
+    .orderBy(messages.createdAt);
+
+  const uiMessages: UIMessage[] = dbMessages.map((msg) => ({
+    id: msg.id,
+    role: msg.role as "user" | "assistant",
+    parts: [{ type: "text", text: msg.text }],
+  }));
+
   return {
-    messages,
+    messages: uiMessages,
   };
 };
 
@@ -26,14 +37,18 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
     messages: loaderData.messages,
   });
 
-  // 新規チャット開始時、ユーザーのメッセージだけ作成してこのページにリダイレクトされる
-  // まだチャットが開始されていないので、ユーザーのメッセージが最後の場合にリクエストを送信する
-  // TODO: 必ずしもユーザーのメッセージが最後の場合に送信したいわけではないので、クエリパラメータとかで制御したい
+  // 新規チャット開始時にAI応答を自動開始
   useEffect(() => {
-    if (messages.length > 0 && status === "ready") {
+    const url = new URL(window.location.href);
+    const shouldStart = url.searchParams.get("start") === "true";
+    
+    if (shouldStart && messages.length > 0 && status === "ready") {
       const lastMessage = messages[messages.length - 1];
       if (lastMessage.role === "user") {
         regenerate();
+        // クエリパラメータを削除
+        url.searchParams.delete("start");
+        window.history.replaceState({}, "", url.toString());
       }
     }
   }, [messages, status, regenerate]);
