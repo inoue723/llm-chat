@@ -14,10 +14,6 @@ export default function Layout({ loaderData }: Route.ComponentProps) {
     console.log("newChat");
   };
 
-  const handleDeleteChat = (chatId: string) => {
-    console.log("deleteChat", chatId);
-  };
-
   return (
     <div className="h-screen flex overflow-hidden">
       {/* Desktop sidebar */}

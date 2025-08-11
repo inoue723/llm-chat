@@ -1,7 +1,6 @@
-import { useChat } from "@ai-sdk/react";
-import { DefaultChatTransport } from "ai";
-import React, { useState } from "react";
-import { href } from "react-router";
+import { Form, redirect } from "react-router";
+import { database } from "~/database/context";
+import { chats } from "~/database/schema";
 import type { Route } from "./+types/home";
 
 export function meta() {
@@ -11,45 +10,61 @@ export function meta() {
   ];
 }
 
-export default function Home({ loaderData }: Route.ComponentProps) {
-  const { messages, sendMessage, status } = useChat({
-    transport: new DefaultChatTransport({
-      api: href("/chats/:chatId/send", { chatId: "new" }),
-    }),
-  });
-  const [input, setInput] = useState("");
+export async function action({ request, params }: Route.ActionArgs) {
+  const formData = await request.formData();
+  const message = formData.get("message") as string;
 
+  if (!message.trim()) {
+    return { error: "メッセージを入力してください" };
+  }
+
+  const newChat = await database()
+    .insert(chats)
+    .values({
+      title: message,
+    })
+    .returning({ id: chats.id });
+
+  // todo: messageを保存する
+
+  return redirect(`/chats/${newChat[0].id}`);
+}
+
+export default function Home({ actionData }: Route.ComponentProps) {
   return (
-    <>
-      {messages.map((message) => (
-        <div key={message.id}>
-          {message.role === "user" ? "User: " : "AI: "}
-          {message.parts.map((part, index) =>
-            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-            part.type === "text" ? <span key={index}>{part.text}</span> : null,
-          )}
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="w-full max-w-md space-y-6">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+            LLM Chat
+          </h1>
+          <p className="mt-2 text-gray-600 dark:text-gray-400">
+            AIとチャットを始めましょう
+          </p>
         </div>
-      ))}
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (input.trim()) {
-            sendMessage({ text: input });
-            setInput("");
-          }
-        }}
-      >
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          disabled={status !== "ready"}
-          placeholder="Say something..."
-        />
-        <button type="submit" disabled={status !== "ready"}>
-          Submit
-        </button>
-      </form>
-    </>
+        <Form method="post" className="space-y-4">
+          <div>
+            <textarea
+              name="message"
+              placeholder="メッセージを入力してください..."
+              className="w-full min-h-[100px] p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+              required
+            />
+          </div>
+
+          {actionData?.error && (
+            <div className="text-red-600 text-sm">{actionData.error}</div>
+          )}
+
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            チャットを開始
+          </button>
+        </Form>
+      </div>
+    </div>
   );
 }
