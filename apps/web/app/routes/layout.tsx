@@ -1,0 +1,34 @@
+import { Outlet } from "react-router";
+import { ChatSidebar } from "~/components/custom/chat-side-bar";
+import { MobileSidebar } from "~/components/custom/mobile-side-bar";
+import type { Route } from "./+types/layout";
+
+export const loader = async () => {
+  return { chats: [] };
+};
+
+export default function Layout({ loaderData }: Route.ComponentProps) {
+  const { chats } = loaderData;
+
+  const handleNewChat = () => {
+    console.log("newChat");
+  };
+
+  const handleDeleteChat = (chatId: string) => {
+    console.log("deleteChat", chatId);
+  };
+
+  return (
+    <div className="h-screen flex overflow-hidden">
+      {/* Desktop sidebar */}
+      <div className="hidden md:block">
+        <ChatSidebar chats={chats} onNewChat={handleNewChat} />
+      </div>
+
+      {/* Mobile sidebar */}
+      <MobileSidebar chats={chats} onNewChat={handleNewChat} />
+
+      <Outlet />
+    </div>
+  );
+}

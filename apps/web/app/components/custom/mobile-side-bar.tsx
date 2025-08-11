@@ -10,24 +10,15 @@ interface MobileSidebarProps {
     timestamp: Date;
   }>;
   activeChat?: string;
-  onChatSelect: (chatId: string) => void;
   onNewChat: () => void;
-  onDeleteChat: (chatId: string) => void;
 }
 
 export function MobileSidebar({
   chats,
   activeChat,
-  onChatSelect,
   onNewChat,
-  onDeleteChat,
 }: MobileSidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
-
-  const handleChatSelect = (chatId: string) => {
-    onChatSelect(chatId);
-    setIsOpen(false);
-  };
 
   return (
     <>
@@ -72,9 +63,7 @@ export function MobileSidebar({
           <ChatSidebar
             chats={chats}
             activeChat={activeChat}
-            onChatSelect={handleChatSelect}
             onNewChat={onNewChat}
-            onDeleteChat={onDeleteChat}
           />
         </div>
       </div>
