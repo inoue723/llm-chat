@@ -1,9 +1,9 @@
 import { database } from "~/database/context";
 import * as schema from "~/database/schema";
-
-import type { Route } from "./+types/home";
 import { Welcome } from "../welcome/welcome";
+import type { Route } from "./+types/home";
 
+// biome-ignore lint/correctness/noEmptyPattern: <explanation>
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "New React Router App" },
