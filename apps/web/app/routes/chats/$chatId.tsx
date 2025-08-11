@@ -4,13 +4,28 @@ import { eq } from "drizzle-orm";
 import { SendIcon } from "lucide-react";
 import { useEffect } from "react";
 import { href } from "react-router";
+import z from "zod/v4";
 import { database } from "~/database/context";
-import { messages } from "~/database/schema";
+import { chats, messages } from "~/database/schema";
 import type { Route } from "./+types/$chatId";
+
+const chatIdSchema = z.uuidv4();
 
 export const loader = async ({ params }: Route.LoaderArgs) => {
   const db = database();
-  const chatId = params.chatId;
+  const chatIdParsed = chatIdSchema.safeParse(params.chatId);
+
+  if (!chatIdParsed.success) {
+    throw new Response("Invalid chat ID", { status: 400 });
+  }
+
+  const chatId = chatIdParsed.data;
+
+  const chat = await db.select().from(chats).where(eq(chats.id, chatId));
+
+  if (chat.length === 0) {
+    throw new Response("Chat not found", { status: 404 });
+  }
 
   const dbMessages = await db
     .select()

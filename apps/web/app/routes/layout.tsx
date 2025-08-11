@@ -1,17 +1,36 @@
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import { ChatSidebar } from "~/components/custom/chat-side-bar";
 import { MobileSidebar } from "~/components/custom/mobile-side-bar";
+import { database } from "~/database/context";
+import { chats } from "~/database/schema";
 import type { Route } from "./+types/layout";
 
 export const loader = async () => {
-  return { chats: [] };
+  const db = database();
+  const chatsList = await db
+    .select({
+      id: chats.id,
+      title: chats.title,
+      createdAt: chats.createdAt,
+    })
+    .from(chats)
+    .orderBy(chats.createdAt);
+
+  return {
+    chats: chatsList.map((chat) => ({
+      id: chat.id,
+      title: chat.title,
+      timestamp: new Date(chat.createdAt),
+    })),
+  };
 };
 
 export default function Layout({ loaderData }: Route.ComponentProps) {
   const { chats } = loaderData;
+  const navigate = useNavigate();
 
   const handleNewChat = () => {
-    console.log("newChat");
+    navigate("/");
   };
 
   return (
