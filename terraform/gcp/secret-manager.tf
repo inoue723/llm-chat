@@ -10,6 +10,14 @@ locals {
       name        = "DATABASE_URL"
       secret_data = var.database_url
     },
+    {
+      name        = "OPENAI_API_KEY"
+      secret_data = var.openai_api_key
+    },
+    {
+      name        = "ANTHROPIC_API_KEY"
+      secret_data = var.anthropic_api_key
+    },
   ]
 
   secret_accessors_list = [
