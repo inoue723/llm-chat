@@ -14,9 +14,14 @@ export function meta() {
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
   const message = formData.get("message") as string;
+  const selectedModel = formData.get("model") as string;
 
   if (!message.trim()) {
     return { error: "メッセージを入力してください" };
+  }
+
+  if (!selectedModel) {
+    return { error: "モデルを選択してください" };
   }
 
   const db = database();
@@ -33,7 +38,7 @@ export async function action({ request }: Route.ActionArgs) {
     chatId,
     text: message,
     role: "user",
-    modelId: "user", // TODO: modelidはtable分けたい
+    modelId: selectedModel,
   });
 
   return redirect(`/chats/${chatId}?start=true`);
@@ -53,38 +58,60 @@ export default function Home({ actionData }: Route.ComponentProps) {
         </div>
 
         <Form method="post" className="relative">
-          <div className="relative">
-            <textarea
-              name="message"
-              placeholder="メッセージを入力してください..."
-              className="w-full resize-none rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-4 py-4 pr-12 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:border-gray-400 dark:focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-400 dark:focus:ring-gray-500 shadow-sm"
-              required
-              rows={4}
-              onInput={(e) => {
-                const target = e.currentTarget;
-                target.style.height = "auto";
-                target.style.height = `${Math.min(target.scrollHeight, 200)}px`;
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  const form = e.currentTarget.form;
-                  if (form) {
-                    const event = new Event("submit", {
-                      cancelable: true,
-                      bubbles: true,
-                    });
-                    form.dispatchEvent(event);
+          <div className="space-y-4">
+            <div className="relative">
+              <label
+                htmlFor="model"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
+                AIモデルを選択してください
+              </label>
+              <select
+                name="model"
+                required
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-gray-900 dark:text-gray-100 focus:border-gray-400 dark:focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-400 dark:focus:ring-gray-500"
+              >
+                <option value="">モデルを選択...</option>
+                <option value="claude-sonnet-4" selected>
+                  Claude Sonnet 4
+                </option>
+                <option value="gpt-5">ChatGPT 5</option>
+              </select>
+            </div>
+
+            <div className="relative">
+              <textarea
+                name="message"
+                placeholder="メッセージを入力してください..."
+                className="w-full resize-none rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-4 py-4 pr-12 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:border-gray-400 dark:focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-400 dark:focus:ring-gray-500 shadow-sm"
+                required
+                rows={4}
+                onInput={(e) => {
+                  const target = e.currentTarget;
+                  target.style.height = "auto";
+                  target.style.height = `${Math.min(target.scrollHeight, 200)}px`;
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    const form = e.currentTarget.form;
+                    if (form) {
+                      const event = new Event("submit", {
+                        cancelable: true,
+                        bubbles: true,
+                      });
+                      form.dispatchEvent(event);
+                    }
                   }
-                }
-              }}
-            />
-            <button
-              type="submit"
-              className="absolute bottom-3 right-3 rounded-lg bg-gray-900 dark:bg-gray-100 p-2 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 disabled:opacity-50"
-            >
-              <SendIcon />
-            </button>
+                }}
+              />
+              <button
+                type="submit"
+                className="absolute bottom-3 right-3 rounded-lg bg-gray-900 dark:bg-gray-100 p-2 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 disabled:opacity-50"
+              >
+                <SendIcon />
+              </button>
+            </div>
           </div>
 
           {actionData?.error && (
