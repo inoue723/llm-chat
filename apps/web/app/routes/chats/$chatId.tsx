@@ -51,6 +51,7 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
       api: href("/chats/:chatId/messages/create", { chatId: params.chatId }),
     }),
     messages: loaderData.messages,
+    generateId: () => crypto.randomUUID(),
   });
 
   // 新規チャット開始時にAI応答を自動開始
@@ -68,10 +69,6 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
       }
     }
   }, [messages, status, regenerate]);
-
-  useEffect(() => {
-    console.log("messages", messages);
-  }, [messages]);
 
   return (
     <>
