@@ -36,8 +36,10 @@ export async function action({ request, params }: Route.ActionArgs) {
       .returning({ id: messages.id });
   }
 
+  // DBとresponseのメッセージIDを一致させるために、事前にメッセージIDを生成しておく
   const newMessageId = crypto.randomUUID();
 
+  // See https://ai-sdk.dev/docs/ai-sdk-ui/chatbot-message-persistence#option-2-setting-ids-with-createuimessagestream
   const stream = createUIMessageStream({
     execute: ({ writer }) => {
       writer.write({
@@ -49,6 +51,7 @@ export async function action({ request, params }: Route.ActionArgs) {
         model: openai("gpt-4.1"),
         system: "You are a helpful assistant.",
         messages: convertToModelMessages(uiMessages),
+        // model情報も保存したいのでここで保存
         onFinish: async (message) => {
           // AIの回答をDBに保存
           await db.insert(messages).values({
