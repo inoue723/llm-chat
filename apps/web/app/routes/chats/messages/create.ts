@@ -27,6 +27,7 @@ export async function action({ request, params }: Route.ActionArgs) {
     await db
       .insert(messages)
       .values({
+        id: lastUserMessage.id,
         chatId,
         text: userMessageText,
         role: "user",
