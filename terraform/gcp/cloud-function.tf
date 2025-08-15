@@ -49,6 +49,7 @@ resource "google_cloud_scheduler_job" "warmup_job" {
 
     oidc_token {
       service_account_email = google_service_account.warmup_scheduler_sa.email
+      
     }
   }
 }
@@ -67,15 +68,7 @@ resource "google_service_account" "warmup_function_sa" {
   description  = "Service account for Cloud Function to call Cloud Run service"
 }
 
-# IAM binding to allow Cloud Scheduler to invoke the warmup function
-resource "google_cloudfunctions2_function_iam_member" "warmup_invoker" {
-  project        = google_cloudfunctions2_function.warmup_function.project
-  location       = google_cloudfunctions2_function.warmup_function.location
-  cloud_function = google_cloudfunctions2_function.warmup_function.name
 
-  role   = "roles/cloudfunctions.invoker"
-  member = "serviceAccount:${google_service_account.warmup_scheduler_sa.email}"
-}
 
 # Storage bucket for warmup function source code
 resource "google_storage_bucket" "warmup_function_source" {
@@ -95,30 +88,14 @@ resource "google_storage_bucket_object" "warmup_function_source" {
   depends_on = [google_storage_bucket.warmup_function_source]
 }
 
-# IAM policy to restrict warmup function access to only Cloud Scheduler
-resource "google_cloudfunctions2_function_iam_policy" "restrict_warmup_access" {
+# IAM binding to allow Cloud Scheduler service account to invoke the warmup function
+resource "google_cloudfunctions2_function_iam_member" "warmup_invoker" {
   project        = google_cloudfunctions2_function.warmup_function.project
   location       = google_cloudfunctions2_function.warmup_function.location
   cloud_function = google_cloudfunctions2_function.warmup_function.name
 
-  policy_data = data.google_iam_policy.restrict_warmup_function_access.policy_data
-}
-
-# IAM policy data that denies all access except from the warmup scheduler service account
-data "google_iam_policy" "restrict_warmup_function_access" {
-  binding {
-    role = "roles/cloudfunctions.invoker"
-    members = [
-      "serviceAccount:${google_service_account.warmup_scheduler_sa.email}"
-    ]
-  }
-
-  binding {
-    role = "roles/cloudfunctions.developer"
-    members = [
-      "serviceAccount:${google_service_account.warmup_scheduler_sa.email}"
-    ]
-  }
+  role   = "roles/cloudfunctions.invoker"
+  member = "serviceAccount:${google_service_account.warmup_scheduler_sa.email}"
 }
 
 # IAM binding to assign Service Account Token Creator role to the warmup function service account
