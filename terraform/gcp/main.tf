@@ -30,6 +30,9 @@ module "project-services" {
     "secretmanager.googleapis.com",
     "artifactregistry.googleapis.com",
     "storage.googleapis.com",
-    "iap.googleapis.com"
+    "iap.googleapis.com",
+    "cloudfunctions.googleapis.com",
+    "cloudscheduler.googleapis.com",
+    "cloudbuild.googleapis.com"
   ]
 }

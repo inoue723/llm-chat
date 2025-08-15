@@ -1,0 +1,16 @@
+{
+  "name": "scheduled-function",
+  "version": "1.0.0",
+  "description": "Cloud Function that runs on a schedule",
+  "main": "index.js",
+  "scripts": {
+    "start": "functions-framework --target=scheduledFunction"
+  },
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.3.0",
+    "google-auth-library": "10.2.1"
+  },
+  "engines": {
+    "node": "22"
+  }
+}

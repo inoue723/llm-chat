@@ -23,3 +23,8 @@ variable "anthropic_api_key" {
   type      = string
   sensitive = true
 }
+
+variable "web_url" {
+  description = "Cloud Run web URL"
+  type        = string
+}
