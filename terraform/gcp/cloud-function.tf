@@ -49,7 +49,6 @@ resource "google_cloud_scheduler_job" "warmup_job" {
 
     oidc_token {
       service_account_email = google_service_account.warmup_scheduler_sa.email
-      
     }
   }
 }
@@ -89,12 +88,12 @@ resource "google_storage_bucket_object" "warmup_function_source" {
 }
 
 # IAM binding to allow Cloud Scheduler service account to invoke the warmup function
-resource "google_cloudfunctions2_function_iam_member" "warmup_invoker" {
+resource "google_cloud_run_service_iam_member" "warmup_invoker" {
   project        = google_cloudfunctions2_function.warmup_function.project
   location       = google_cloudfunctions2_function.warmup_function.location
-  cloud_function = google_cloudfunctions2_function.warmup_function.name
+  service        = google_cloudfunctions2_function.warmup_function.name
 
-  role   = "roles/cloudfunctions.invoker"
+  role   = "roles/run.invoker"
   member = "serviceAccount:${google_service_account.warmup_scheduler_sa.email}"
 }
 
