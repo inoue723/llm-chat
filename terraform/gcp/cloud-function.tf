@@ -43,10 +43,6 @@ resource "google_cloud_scheduler_job" "warmup_job" {
     http_method = "POST"
     uri         = google_cloudfunctions2_function.warmup_function.url
 
-    headers = {
-      "User-Agent" = "Google-Cloud-Scheduler"
-    }
-
     oidc_token {
       service_account_email = google_service_account.warmup_scheduler_sa.email
     }
