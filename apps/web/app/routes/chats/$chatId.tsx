@@ -5,6 +5,7 @@ import { SendIcon } from "lucide-react";
 import { useEffect } from "react";
 import { href } from "react-router";
 import z from "zod/v4";
+import { MarkdownRenderer } from "~/components/markdown-renderer";
 import { database } from "~/database/context";
 import { chats, messages } from "~/database/schema";
 import type { Route } from "./+types/$chatId";
@@ -100,15 +101,13 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
                     <div className="font-semibold text-gray-900 dark:text-gray-100">
                       {message.role === "user" ? "あなた" : "アシスタント"}
                     </div>
-                    <div className="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200">
+                    <div>
                       {message.parts.map((part, index) =>
                         part.type === "text" ? (
-                          <div
+                          <MarkdownRenderer
                             key={`${message.id}-part-${index}`}
-                            className="whitespace-pre-wrap"
-                          >
-                            {part.text}
-                          </div>
+                            content={part.text}
+                          />
                         ) : null,
                       )}
                     </div>
