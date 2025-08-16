@@ -58,6 +58,7 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
   const spacerRef = useRef<HTMLDivElement>(null);
   const latestUserMessageRef = useRef<HTMLDivElement>(null);
   const nextAssistantMessageRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   // 新規チャット開始時にAI応答を自動開始
   useEffect(() => {
@@ -78,25 +79,29 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
   // 動的な高さ調整とスクロール制御（順序保証）
   useEffect(() => {
     const updateSpacerHeight = () => {
-      if (spacerRef.current && latestUserMessageRef.current) {
-        const viewport = window.innerHeight;
+      if (
+        spacerRef.current &&
+        latestUserMessageRef.current &&
+        chatContainerRef.current
+      ) {
+        // チャットコンテナの実際の高さ（スクロール分を除く）を取得
+        const chatContainerHeight = chatContainerRef.current.offsetHeight;
         const userMessageHeight = latestUserMessageRef.current.offsetHeight;
-        
+
         // 次のアシスタントメッセージの実際の高さを取得（refが存在する場合のみ）
         let nextAssistantHeight = 0;
         if (nextAssistantMessageRef.current) {
           nextAssistantHeight = nextAssistantMessageRef.current.offsetHeight;
         }
-        
-        const totalAssistantHeight = nextAssistantHeight;
-        const availableHeight = viewport - userMessageHeight - totalAssistantHeight
+
+        const availableHeight =
+          chatContainerHeight - userMessageHeight - nextAssistantHeight;
         spacerRef.current.style.height = `${Math.max(availableHeight, 0)}px`;
-        console.log("Viewport height:", viewport);
-        console.log("User message height:", userMessageHeight);
-        console.log("Next assistant height:", nextAssistantHeight);
-        console.log("Total assistant height:", totalAssistantHeight);
-        console.log("Available height:", availableHeight);
-        console.log("Spacer height set to:", spacerRef.current.style.height);
+        // console.log("Chat container height:", chatContainerHeight);
+        // console.log("User message height:", userMessageHeight);
+        // console.log("Next assistant height:", nextAssistantHeight);
+        // console.log("Available height:", availableHeight);
+        // console.log("Spacer height set to:", spacerRef.current.style.height);
       }
     };
 
@@ -104,18 +109,21 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
       if (messages.length > 0 && latestUserMessageRef.current) {
         const lastMessage = messages[messages.length - 1];
         const secondLastMessage = messages[messages.length - 2];
-        
+
         // 新しいユーザーメッセージが追加された場合
-        if (lastMessage.role === "user" && (!secondLastMessage || secondLastMessage.role === "assistant")) {
+        if (
+          lastMessage.role === "user" &&
+          (!secondLastMessage || secondLastMessage.role === "assistant")
+        ) {
           // 1. まず高さ調整を実行
           updateSpacerHeight();
-          
+
           // 2. 次にスクロール実行（高さ調整後に確実に実行するため少し遅延）
           requestAnimationFrame(() => {
             requestAnimationFrame(() => {
-              latestUserMessageRef.current?.scrollIntoView({ 
-                behavior: "smooth", 
-                block: "start" 
+              latestUserMessageRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
               });
             });
           });
@@ -125,112 +133,119 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
 
     // 初期実行とリサイズ時の高さ調整
     updateSpacerHeight();
-    window.addEventListener('resize', updateSpacerHeight);
-    
+    window.addEventListener("resize", updateSpacerHeight);
+
     // メッセージ変更時の処理
     handleNewMessage();
-    
-    return () => window.removeEventListener('resize', updateSpacerHeight);
+
+    return () => window.removeEventListener("resize", updateSpacerHeight);
   }, [messages]);
 
   return (
-    <>
-      <div className="overflow-y-auto">
-        <div className="space-y-6">
-          {messages.map((message, index) => {
-            const isLatestUserMessage = message.role === "user" && 
-              (index === messages.length - 1 || messages[index + 1]?.role === "assistant");
-            
-            // 最新ユーザーメッセージの次のアシスタントメッセージかどうか判定
-            const isNextAssistantMessage = message.role === "assistant" && 
-              index > 0 && 
-              messages[index - 1]?.role === "user" &&
-              (index - 1 === messages.length - 2 || index - 1 === messages.length - 1);
-            
-            return (
-              <div
-                key={message.id}
-                ref={isLatestUserMessage ? latestUserMessageRef : 
-                     isNextAssistantMessage ? nextAssistantMessageRef : null}
-                data-role={message.role}
-                className={`group ${
-                  message.role === "user"
-                    ? "bg-white dark:bg-gray-900"
-                    : "bg-gray-50 dark:bg-gray-800"
-                }`}
-              >
-                <div className="mx-auto max-w-4xl px-4 py-6">
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0">
-                      <div
-                        className={`flex h-8 w-8 items-center justify-center rounded-full ${
-                          message.role === "user"
-                            ? "bg-blue-600 text-white"
-                            : "bg-green-600 text-white"
-                        }`}
-                      >
-                        {message.role === "user" ? "あ" : "AI"}
-                      </div>
-                    </div>
-                    <div className="flex-1 space-y-2 overflow-hidden">
-                      <div className="font-semibold text-gray-900 dark:text-gray-100">
-                        {message.role === "user" ? "あなた" : "アシスタント"}
-                      </div>
-                      <div>
-                        {message.parts.map((part, partIndex) =>
-                          part.type === "text" ? (
-                            <MarkdownRenderer
-                              key={`${message.id}-part-${partIndex}`}
-                              content={part.text}
-                            />
-                          ) : null,
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-          {status === "streaming" && (
-            <div className="bg-gray-50 dark:bg-gray-800">
+    <div ref={chatContainerRef} className="h-full">
+      <div className="space-y-6">
+        {messages.map((message, index) => {
+          const isLatestUserMessage =
+            message.role === "user" &&
+            (index === messages.length - 1 ||
+              messages[index + 1]?.role === "assistant");
+
+          // 最新ユーザーメッセージの次のアシスタントメッセージかどうか判定
+          const isNextAssistantMessage =
+            message.role === "assistant" &&
+            index > 0 &&
+            messages[index - 1]?.role === "user" &&
+            (index - 1 === messages.length - 2 ||
+              index - 1 === messages.length - 1);
+
+          return (
+            <div
+              key={message.id}
+              ref={
+                isLatestUserMessage
+                  ? latestUserMessageRef
+                  : isNextAssistantMessage
+                    ? nextAssistantMessageRef
+                    : null
+              }
+              data-role={message.role}
+              className={`group ${
+                message.role === "user"
+                  ? "bg-white dark:bg-gray-900"
+                  : "bg-gray-50 dark:bg-gray-800"
+              }`}
+            >
               <div className="mx-auto max-w-4xl px-4 py-6">
                 <div className="flex gap-4">
                   <div className="flex-shrink-0">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-600 text-white">
-                      AI
+                    <div
+                      className={`flex h-8 w-8 items-center justify-center rounded-full ${
+                        message.role === "user"
+                          ? "bg-blue-600 text-white"
+                          : "bg-green-600 text-white"
+                      }`}
+                    >
+                      {message.role === "user" ? "あ" : "AI"}
                     </div>
                   </div>
-                  <div className="flex-1">
-                    <div className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                      アシスタント
+                  <div className="flex-1 space-y-2 overflow-hidden">
+                    <div className="font-semibold text-gray-900 dark:text-gray-100">
+                      {message.role === "user" ? "あなた" : "アシスタント"}
                     </div>
-                    <div className="flex items-center space-x-1">
-                      <div
-                        className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"
-                        style={{ animationDelay: "0ms" }}
-                      ></div>
-                      <div
-                        className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"
-                        style={{ animationDelay: "150ms" }}
-                      ></div>
-                      <div
-                        className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"
-                        style={{ animationDelay: "300ms" }}
-                      ></div>
+                    <div>
+                      {message.parts.map((part, partIndex) =>
+                        part.type === "text" ? (
+                          <MarkdownRenderer
+                            key={`${message.id}-part-${partIndex}`}
+                            content={part.text}
+                          />
+                        ) : null,
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          )}
-          
-          {/* 動的な高さ調整用のスペーサー */}
-          <div ref={spacerRef} aria-hidden="true" />
-        </div>
+          );
+        })}
+        {status === "streaming" && (
+          <div className="bg-gray-50 dark:bg-gray-800">
+            <div className="mx-auto max-w-4xl px-4 py-6">
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-600 text-white">
+                    AI
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                    アシスタント
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <div
+                      className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"
+                      style={{ animationDelay: "0ms" }}
+                    ></div>
+                    <div
+                      className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"
+                      style={{ animationDelay: "150ms" }}
+                    ></div>
+                    <div
+                      className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"
+                      style={{ animationDelay: "300ms" }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* 動的な高さ調整用のスペーサー */}
+        <div ref={spacerRef} aria-hidden="true" />
       </div>
 
-      <div className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+      <div className="sticky bottom-0 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 rounded-lg shadow-sm">
         <div className="mx-auto max-w-4xl px-4 py-4">
           <form
             onSubmit={(e) => {
@@ -282,6 +297,6 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }
