@@ -88,20 +88,12 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
           nextAssistantHeight = nextAssistantMessageRef.current.offsetHeight;
         }
         
-        // ストリーミング中の場合は追加の高さを計算
-        let streamingHeight = 0;
-        const streamingElement = document.querySelector('[data-streaming="true"]');
-        if (streamingElement) {
-          streamingHeight = streamingElement.getBoundingClientRect().height;
-        }
-        
-        const totalAssistantHeight = nextAssistantHeight + streamingHeight;
-        const availableHeight = viewport - userMessageHeight - totalAssistantHeight - 150; // マージンとフォーム分
+        const totalAssistantHeight = nextAssistantHeight;
+        const availableHeight = viewport - userMessageHeight - totalAssistantHeight
         spacerRef.current.style.height = `${Math.max(availableHeight, 0)}px`;
         console.log("Viewport height:", viewport);
         console.log("User message height:", userMessageHeight);
         console.log("Next assistant height:", nextAssistantHeight);
-        console.log("Streaming height:", streamingHeight);
         console.log("Total assistant height:", totalAssistantHeight);
         console.log("Available height:", availableHeight);
         console.log("Spacer height set to:", spacerRef.current.style.height);
@@ -201,7 +193,7 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
             );
           })}
           {status === "streaming" && (
-            <div className="bg-gray-50 dark:bg-gray-800" data-streaming="true">
+            <div className="bg-gray-50 dark:bg-gray-800">
               <div className="mx-auto max-w-4xl px-4 py-6">
                 <div className="flex gap-4">
                   <div className="flex-shrink-0">
