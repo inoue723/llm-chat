@@ -142,8 +142,8 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
   }, [messages]);
 
   return (
-    <div ref={chatContainerRef} className="h-full">
-      <div className="space-y-6">
+    <div ref={chatContainerRef} className="h-full flex flex-col gap-8">
+      <div className="flex flex-col gap-5">
         {messages.map((message, index) => {
           const isLatestUserMessage =
             message.role === "user" &&
