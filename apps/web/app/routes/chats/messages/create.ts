@@ -60,6 +60,7 @@ export async function action({ request, params }: Route.ActionArgs) {
         stream: simulateReadableStream({
           chunks: getMockChunks(newMessageId),
           initialDelayInMs: 50,
+          chunkDelayInMs: 80,
         }),
       }),
     });

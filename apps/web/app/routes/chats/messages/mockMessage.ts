@@ -18,8 +18,8 @@ function createRandomChunks(text: string, messageId: string) {
   chunks.push({ type: "text-start" as const, id: messageId });
 
   while (currentIndex < text.length) {
-    // 1-10文字のランダムなchunkサイズを決定
-    const chunkSize = Math.floor(Math.random() * 10) + 1;
+    // 30-50文字のランダムなchunkサイズを決定
+    const chunkSize = Math.floor(Math.random() * 21) + 30;
     const endIndex = Math.min(currentIndex + chunkSize, text.length);
     const chunk = text.slice(currentIndex, endIndex);
 
@@ -32,7 +32,7 @@ function createRandomChunks(text: string, messageId: string) {
     currentIndex = endIndex;
   }
 
-  chunks.push({ type: "text-end" as const, id: "text-1" });
+  chunks.push({ type: "text-end" as const, id: messageId });
   chunks.push({
     type: "finish" as const,
     finishReason: "stop" as const,

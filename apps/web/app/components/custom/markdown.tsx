@@ -1,31 +1,25 @@
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { useTheme } from "next-themes";
+import {
+  oneDark,
+  oneLight,
+} from "react-syntax-highlighter/dist/cjs/styles/prism";
 
-interface MarkdownRendererProps {
-  content: string;
-}
-
-export function MarkdownRenderer({ content }: MarkdownRendererProps) {
-  const { theme, systemTheme } = useTheme();
-  const currentTheme = theme === "system" ? systemTheme : theme;
-
-  return (
-    <div className="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200">
+export function getMarkdown(theme?: string) {
+  return ({ content }: { content: string }) => {
+    return (
       <ReactMarkdown
         components={{
           code(props) {
             const { children, className, node, ...rest } = props;
             const match = /language-(\w+)/.exec(className || "");
             const language = match?.[1];
-            
+
             return language ? (
               <SyntaxHighlighter
                 PreTag="div"
                 language={language}
-                style={currentTheme === "dark" ? oneDark : oneLight}
+                style={theme === "dark" ? oneDark : oneLight}
                 customStyle={{
                   margin: 0,
                   borderRadius: "0.375rem",
@@ -49,7 +43,10 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
           blockquote(props) {
             const { node, ...rest } = props;
             return (
-              <blockquote className="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400 my-4" {...rest}>
+              <blockquote
+                className="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400 my-4"
+                {...rest}
+              >
                 {props.children}
               </blockquote>
             );
@@ -58,7 +55,10 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
             const { node, ...rest } = props;
             return (
               <div className="overflow-x-auto">
-                <table className="min-w-full border border-gray-300 dark:border-gray-600 rounded-lg" {...rest}>
+                <table
+                  className="min-w-full border border-gray-300 dark:border-gray-600 rounded-lg"
+                  {...rest}
+                >
                   {props.children}
                 </table>
               </div>
@@ -67,7 +67,10 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
           th(props) {
             const { node, ...rest } = props;
             return (
-              <th className="border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 px-3 py-2 text-left font-semibold" {...rest}>
+              <th
+                className="border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 px-3 py-2 text-left font-semibold"
+                {...rest}
+              >
                 {props.children}
               </th>
             );
@@ -75,7 +78,10 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
           td(props) {
             const { node, ...rest } = props;
             return (
-              <td className="border border-gray-300 dark:border-gray-600 px-3 py-2" {...rest}>
+              <td
+                className="border border-gray-300 dark:border-gray-600 px-3 py-2"
+                {...rest}
+              >
                 {props.children}
               </td>
             );
@@ -99,7 +105,10 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
           h1(props) {
             const { node, ...rest } = props;
             return (
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-6 mb-4" {...rest}>
+              <h1
+                className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-6 mb-4"
+                {...rest}
+              >
                 {props.children}
               </h1>
             );
@@ -107,7 +116,10 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
           h2(props) {
             const { node, ...rest } = props;
             return (
-              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-5 mb-3" {...rest}>
+              <h2
+                className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-5 mb-3"
+                {...rest}
+              >
                 {props.children}
               </h2>
             );
@@ -115,7 +127,10 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
           h3(props) {
             const { node, ...rest } = props;
             return (
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-4 mb-3" {...rest}>
+              <h3
+                className="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-4 mb-3"
+                {...rest}
+              >
                 {props.children}
               </h3>
             );
@@ -145,6 +160,14 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
       >
         {content}
       </ReactMarkdown>
-    </div>
-  );
+    );
+  };
 }
+
+export const Markdown = ({
+  content,
+  theme,
+}: {
+  content: string;
+  theme?: string;
+}) => {};
