@@ -64,7 +64,6 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
   const latestUserMessageRef = useRef<HTMLDivElement>(null);
   const nextAssistantMessageRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
-  console.log("status:", status, error);
 
   // 新規チャット開始時にAI応答を自動開始
   useEffect(() => {

@@ -32,7 +32,7 @@ function createRandomChunks(text: string, messageId: string) {
     currentIndex = endIndex;
   }
 
-  chunks.push({ type: "text-end" as const, id: "text-1" });
+  chunks.push({ type: "text-end" as const, id: messageId });
   chunks.push({
     type: "finish" as const,
     finishReason: "stop" as const,
