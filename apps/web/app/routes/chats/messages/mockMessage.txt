@@ -1,0 +1,119 @@
+S3の署名付きURL発行において300件程度を一気に処理する場合のパフォーマンス最適化について、以下の方法をご紹介します。
+
+## 1. 並列処理（推奨）
+
+```python
+import concurrent.futures
+import boto3
+from typing import List
+
+def generate_presigned_url_batch(s3_client, bucket_name: str, object_keys: List[str], expiration: int = 3600):
+    """並列処理で署名付きURLを生成"""
+    
+    def generate_single_url(object_key):
+        try:
+            return s3_client.generate_presigned_url(
+                'get_object',
+                Params={'Bucket': bucket_name, 'Key': object_key},
+                ExpiresIn=expiration
+            )
+        except Exception as e:
+            return f"Error: {str(e)}"
+    
+    # ThreadPoolExecutorで並列実行
+    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+        urls = list(executor.map(generate_single_url, object_keys))
+    
+    return urls
+
+# 使用例
+s3_client = boto3.client('s3')
+object_keys = ['file1.jpg', 'file2.jpg', ...]  # 300個のキー
+urls = generate_presigned_url_batch(s3_client, 'your-bucket', object_keys)
+```
+
+## 2. 非同期処理（Python asyncio）
+
+```python
+import asyncio
+import aioboto3
+
+async def generate_presigned_url_async(bucket_name: str, object_keys: List[str]):
+    """非同期で署名付きURLを生成"""
+    
+    async def generate_single_url(s3_client, object_key):
+        return await s3_client.generate_presigned_url(
+            'get_object',
+            Params={'Bucket': bucket_name, 'Key': object_key},
+            ExpiresIn=3600
+        )
+    
+    session = aioboto3.Session()
+    async with session.client('s3') as s3_client:
+        tasks = [generate_single_url(s3_client, key) for key in object_keys]
+        urls = await asyncio.gather(*tasks)
+    
+    return urls
+
+# 使用例
+urls = asyncio.run(generate_presigned_url_async('your-bucket', object_keys))
+```
+
+## 3. パフォーマンス最適化のポイント
+
+### 接続プールの設定
+```python
+import boto3
+from botocore.config import Config
+
+config = Config(
+    max_pool_connections=50,  # 接続プール数を増やす
+    retries={'max_attempts': 3}
+)
+s3_client = boto3.client('s3', config=config)
+```
+
+### セッションの再利用
+```python
+# セッションを使い回す
+session = boto3.Session()
+s3_client = session.client('s3')
+```
+
+## 4. 実行時間の比較例
+
+```python
+import time
+
+# シーケンシャル実行
+start = time.time()
+sequential_urls = []
+for key in object_keys:
+    url = s3_client.generate_presigned_url('get_object', 
+                                         Params={'Bucket': bucket_name, 'Key': key})
+    sequential_urls.append(url)
+sequential_time = time.time() - start
+
+# 並列実行
+start = time.time()
+parallel_urls = generate_presigned_url_batch(s3_client, bucket_name, object_keys)
+parallel_time = time.time() - start
+
+print(f"シーケンシャル: {sequential_time:.2f}秒")
+print(f"並列処理: {parallel_time:.2f}秒")
+print(f"改善率: {sequential_time/parallel_time:.2f}倍")
+```
+
+## 5. パフォーマンス改善の期待値
+
+- **シーケンシャル実行**: 300件で約15-30秒
+- **並列処理（10-20ワーカー）**: 300件で約2-5秒
+- **改善効果**: 約5-10倍の高速化が期待できます
+
+## 6. 注意事項
+
+1. **レート制限**: AWSのAPI制限に注意（通常は十分な余裕があります）
+2. **メモリ使用量**: 大量のURLを一度にメモリに保持する点に注意
+3. **エラーハンドリング**: 一部の生成に失敗しても全体を止めない設計にする
+
+300件程度であれば並列処理で十分に高速化できるはずです。実際の環境でテストして最適な並列度を調整することをお勧めします。

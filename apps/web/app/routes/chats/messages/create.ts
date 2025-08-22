@@ -4,13 +4,16 @@ import {
   convertToModelMessages,
   createUIMessageStream,
   createUIMessageStreamResponse,
+  simulateReadableStream,
   streamText,
   type UIMessage,
 } from "ai";
+import { MockLanguageModelV2 } from "ai/test";
 import { eq } from "drizzle-orm";
 import { database } from "~/database/context";
 import { messages } from "~/database/schema";
 import type { Route } from "../+types/$chatId";
+import { getMockChunks } from "./mockMessage";
 
 export async function action({ request, params }: Route.ActionArgs) {
   const { messages: uiMessages }: { messages: UIMessage[] } =
@@ -51,7 +54,23 @@ export async function action({ request, params }: Route.ActionArgs) {
   // DBとresponseのメッセージIDを一致させるために、事前にメッセージIDを生成しておく
   const newMessageId = crypto.randomUUID();
 
+  const getMockModel = () => {
+    return new MockLanguageModelV2({
+      doStream: async () => ({
+        stream: simulateReadableStream({
+          chunks: getMockChunks(newMessageId),
+          initialDelayInMs: 50,
+        }),
+      }),
+    });
+  };
+
   const getModel = (modelId: string) => {
+    // 開発環境の場合はモックモデルを使用
+    if (process.env.NODE_ENV === "development") {
+      return getMockModel();
+    }
+
     switch (modelId) {
       case "claude-sonnet-4":
         return anthropic("claude-sonnet-4-20250514");
