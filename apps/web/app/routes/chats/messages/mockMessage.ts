@@ -18,8 +18,8 @@ function createRandomChunks(text: string, messageId: string) {
   chunks.push({ type: "text-start" as const, id: messageId });
 
   while (currentIndex < text.length) {
-    // 1-10文字のランダムなchunkサイズを決定
-    const chunkSize = Math.floor(Math.random() * 10) + 1;
+    // 20-40文字のランダムなchunkサイズを決定
+    const chunkSize = Math.floor(Math.random() * 21) + 20;
     const endIndex = Math.min(currentIndex + chunkSize, text.length);
     const chunk = text.slice(currentIndex, endIndex);
 

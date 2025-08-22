@@ -2,10 +2,12 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { eq } from "drizzle-orm";
 import { SendIcon } from "lucide-react";
+import { useTheme } from "next-themes";
 import { useEffect, useRef } from "react";
 import { href } from "react-router";
 import z from "zod/v4";
-import { MarkdownRenderer } from "~/components/markdown-renderer";
+import { getMarkdown } from "~/components/custom/markdown";
+import { MemoizedMarkdown } from "~/components/custom/memorized-markdown";
 import { database } from "~/database/context";
 import { chats, messages } from "~/database/schema";
 import type { Route } from "./+types/$chatId";
@@ -46,19 +48,23 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
 };
 
 export default function Chat({ params, loaderData }: Route.ComponentProps) {
-  const { messages, sendMessage, status, regenerate } = useChat({
+  const { messages, sendMessage, status, regenerate, error } = useChat({
     id: params.chatId,
     transport: new DefaultChatTransport({
       api: href("/chats/:chatId/messages/create", { chatId: params.chatId }),
     }),
     messages: loaderData.messages,
     generateId: () => crypto.randomUUID(),
+    experimental_throttle: 50,
   });
+  const theme = useTheme();
+  const Markdown = getMarkdown(theme.resolvedTheme || "dark");
 
   const spacerRef = useRef<HTMLDivElement>(null);
   const latestUserMessageRef = useRef<HTMLDivElement>(null);
   const nextAssistantMessageRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  console.log("status:", status, error);
 
   // 新規チャット開始時にAI応答を自動開始
   useEffect(() => {
@@ -193,11 +199,13 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
                       {message.role === "user" ? "あなた" : "アシスタント"}
                     </div>
                     <div>
-                      {message.parts.map((part, partIndex) =>
+                      {message.parts.map((part) =>
                         part.type === "text" ? (
-                          <MarkdownRenderer
-                            key={`${message.id}-part-${partIndex}`}
+                          <MemoizedMarkdown
+                            key={`${message.id}-text`}
+                            id={message.id}
                             content={part.text}
+                            Markdown={Markdown}
                           />
                         ) : null,
                       )}
