@@ -1,10 +1,16 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const messageText = fs.readFileSync(
-  path.join(import.meta.dirname, "mockMessage.txt"),
-  "utf-8",
-);
+let messageText = "";
+
+if (process.env.NODE_ENV === "development") {
+  messageText = fs.readFileSync(
+    path.join(import.meta.dirname, "mockMessage.txt"),
+    "utf-8",
+  );
+} else {
+  messageText = "";
+}
 
 export function getMockChunks(messageId: string) {
   return createRandomChunks(messageText, messageId);
