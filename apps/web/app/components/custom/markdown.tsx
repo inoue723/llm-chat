@@ -163,11 +163,3 @@ export function getMarkdown(theme?: string) {
     );
   };
 }
-
-export const Markdown = ({
-  content,
-  theme,
-}: {
-  content: string;
-  theme?: string;
-}) => {};
