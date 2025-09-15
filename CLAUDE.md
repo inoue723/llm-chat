@@ -25,7 +25,8 @@ cd apps/web
 
 ### Root Level Commands
 
-- **Linting**: `npx @biomejs/biome check .` (uses Biome for linting and formatting)
+- **Linting**: `pnpm lint` (runs oxlint; fast JS/TS linter)
+- **Auto-fix**: `pnpm lint:fix` (applies safe fixes via oxlint)
 - **Supabase local development**: `supabase start` (starts local Supabase instance)
 
 ### Package Manager
@@ -84,6 +85,6 @@ Uses PostgreSQL with Drizzle ORM. Main tables:
 
 - Uses shadcn/ui component library conventions
 - TypeScript interfaces defined in `app/lib/api.ts` for chat messages and responses
-- Biome for code formatting (2-space indentation)
+- Formatting: not configured at root. Consider adding Prettier or keeping Biome's formatter if you want formatting-on-save.
 - React Router v7 file-based routing
 - Custom components use Lucide React icons

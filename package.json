@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint --fix ."
   },
   "engines": {
     "pnpm": "10.14.0",
@@ -15,7 +17,7 @@
   "license": "ISC",
   "packageManager": "pnpm@10.14.0",
   "devDependencies": {
-    "@biomejs/biome": "2.1.4",
+    "oxlint": "^1.15.0",
     "supabase": "^2.33.9"
   }
 }

@@ -40,10 +40,8 @@ export const MemoizedMarkdown = memo(
       <MemoizedMarkdownBlock
         content={block}
         Markdown={Markdown}
-        key={`${id}-block_${
-          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-          index
-        }`}
+        // eslint-disable-next-line react/no-array-index-key
+        key={`${id}-block_${index}`}
       />
     ));
   },
