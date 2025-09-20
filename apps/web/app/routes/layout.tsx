@@ -1,4 +1,5 @@
 import { Outlet, useNavigate } from "react-router";
+import { desc } from "drizzle-orm";
 import { ChatSidebar } from "~/components/custom/chat-side-bar";
 import { MobileSidebar } from "~/components/custom/mobile-side-bar";
 import { database } from "~/database/context";
@@ -14,7 +15,7 @@ export const loader = async () => {
       createdAt: chats.createdAt,
     })
     .from(chats)
-    .orderBy(chats.createdAt);
+    .orderBy(desc(chats.createdAt));
 
   return {
     chats: chatsList.map((chat) => ({
