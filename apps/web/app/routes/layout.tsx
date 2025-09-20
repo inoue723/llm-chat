@@ -31,7 +31,7 @@ export default function Layout({ loaderData }: Route.ComponentProps) {
   const navigate = useNavigate();
 
   const handleNewChat = () => {
-    navigate("/");
+    navigate("/chats");
   };
 
   return (
