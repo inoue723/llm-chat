@@ -85,6 +85,7 @@ export default function Home({ actionData }: Route.ComponentProps) {
                 placeholder="メッセージを入力してください..."
                 className="w-full resize-none rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-4 py-4 pr-12 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:border-gray-400 dark:focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-400 dark:focus:ring-gray-500 shadow-sm"
                 required
+                autoFocus
                 rows={4}
                 onInput={(e) => {
                   const target = e.currentTarget;
