@@ -54,7 +54,7 @@ export function MobileSidebar({
         <div className="relative w-80 h-full">
           <Button
             onClick={() => setIsOpen(false)}
-            className="absolute top-4 right-4 z-10 bg-gray-700 hover:bg-gray-600 text-white p-1"
+            className="absolute top-4 right-4 z-10 bg-secondary hover:bg-secondary/80 text-secondary-foreground p-1"
           >
             <X size={16} />
           </Button>

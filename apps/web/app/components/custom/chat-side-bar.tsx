@@ -35,8 +35,8 @@ export function ChatSidebar({ chats, onNewChat }: ChatSidebarProps) {
   };
 
   return (
-    <div className="w-64 lg:w-64 md:w-56 sm:w-48 bg-gray-900 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col h-full shrink-0">
-      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+    <div className="w-64 lg:w-64 md:w-56 sm:w-48 bg-secondary dark:bg-secondary border-r border-border flex flex-col h-full shrink-0">
+      <div className="p-4 border-b border-border">
         <Button
           onClick={onNewChat}
           className="w-full flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white"
@@ -48,7 +48,7 @@ export function ChatSidebar({ chats, onNewChat }: ChatSidebarProps) {
 
       <div className="flex-1 overflow-y-auto p-2">
         {chats.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-32 text-gray-500 dark:text-gray-400">
+          <div className="flex flex-col items-center justify-center h-32 text-muted-foreground">
             <MessageSquare size={32} />
             <p className="mt-2 text-sm">チャットがありません</p>
           </div>

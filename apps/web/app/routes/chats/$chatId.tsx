@@ -176,8 +176,8 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
               data-role={message.role}
               className={`group ${
                 message.role === "user"
-                  ? "bg-white dark:bg-gray-900"
-                  : "bg-gray-50 dark:bg-gray-800"
+                  ? "bg-background"
+                  : "bg-secondary"
               }`}
             >
               <div className="mx-auto max-w-4xl px-4 py-6">
@@ -194,7 +194,7 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
                     </div>
                   </div>
                   <div className="flex-1 space-y-2 overflow-hidden">
-                    <div className="font-semibold text-gray-900 dark:text-gray-100">
+                    <div className="font-semibold text-foreground">
                       {message.role === "user" ? "あなた" : "アシスタント"}
                     </div>
                     <div>
@@ -216,7 +216,7 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
           );
         })}
         {status === "streaming" && messages[messages.length - 1]?.role !== "assistant" && (
-          <div className="bg-gray-50 dark:bg-gray-800">
+          <div className="bg-secondary">
             <div className="mx-auto max-w-4xl px-4 py-6">
               <div className="flex gap-4">
                 <div className="flex-shrink-0">
@@ -225,20 +225,20 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
                   </div>
                 </div>
                 <div className="flex-1">
-                  <div className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                  <div className="font-semibold text-foreground mb-2">
                     アシスタント
                   </div>
                   <div className="flex items-center space-x-1">
                     <div
-                      className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"
+                      className="h-2 w-2 bg-muted-foreground rounded-full animate-bounce"
                       style={{ animationDelay: "0ms" }}
                     ></div>
                     <div
-                      className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"
+                      className="h-2 w-2 bg-muted-foreground rounded-full animate-bounce"
                       style={{ animationDelay: "150ms" }}
                     ></div>
                     <div
-                      className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"
+                      className="h-2 w-2 bg-muted-foreground rounded-full animate-bounce"
                       style={{ animationDelay: "300ms" }}
                     ></div>
                   </div>
@@ -252,7 +252,7 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
         <div ref={spacerRef} aria-hidden="true" />
       </div>
 
-      <div className="sticky bottom-0 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 rounded-lg shadow-sm">
+      <div className="sticky bottom-0 border-t border-border bg-background rounded-lg shadow-sm">
         <div className="mx-auto max-w-4xl px-4 py-4">
           <form
             onSubmit={(e) => {
@@ -271,7 +271,7 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
               <textarea
                 name="message"
                 placeholder="メッセージを入力..."
-                className="flex-1 resize-none rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-4 py-3 pr-12 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:border-gray-400 dark:focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-400 dark:focus:ring-gray-500"
+                className="flex-1 resize-none rounded-2xl border border-border bg-background px-4 py-3 pr-12 text-foreground placeholder-muted-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
                 disabled={status !== "ready"}
                 rows={1}
                 onKeyDown={(e) => {
@@ -296,7 +296,7 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
               <button
                 type="submit"
                 disabled={status !== "ready"}
-                className="absolute right-2 rounded-lg p-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 disabled:opacity-50 disabled:hover:bg-transparent"
+                className="absolute right-2 rounded-lg p-2 text-muted-foreground hover:bg-secondary disabled:opacity-50 disabled:hover:bg-transparent"
               >
                 {status === "ready" ? (
                   <SendIcon />

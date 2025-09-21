@@ -49,10 +49,10 @@ export default function Home({ actionData }: Route.ComponentProps) {
     <div className="flex-1 flex flex-col items-center justify-center px-4">
       <div className="w-full space-y-8">
         <div className="text-center">
-          <h1 className="text-5xl font-semibold text-gray-900 dark:text-gray-100 mb-3">
+          <h1 className="text-5xl font-semibold text-foreground mb-3">
             LLM Chat
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400">
+          <p className="text-lg text-muted-foreground">
             今日はどのようなお手伝いをしましょうか？
           </p>
         </div>
@@ -62,14 +62,14 @@ export default function Home({ actionData }: Route.ComponentProps) {
             <div className="relative">
               <label
                 htmlFor="model"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 AIモデルを選択してください
               </label>
               <select
                 name="model"
                 required
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-gray-900 dark:text-gray-100 focus:border-gray-400 dark:focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-400 dark:focus:ring-gray-500"
+                className="w-full rounded-lg border border-border bg-background px-3 py-2 text-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
               >
                 <option value="">モデルを選択...</option>
                 <option value="claude-sonnet-4" selected>
@@ -83,7 +83,7 @@ export default function Home({ actionData }: Route.ComponentProps) {
               <textarea
                 name="message"
                 placeholder="メッセージを入力してください..."
-                className="w-full resize-none rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-4 py-4 pr-12 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:border-gray-400 dark:focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-400 dark:focus:ring-gray-500 shadow-sm"
+                className="w-full resize-none rounded-2xl border border-border bg-background px-4 py-4 pr-12 text-foreground placeholder-muted-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring shadow-sm"
                 required
                 autoFocus
                 rows={4}
@@ -108,7 +108,7 @@ export default function Home({ actionData }: Route.ComponentProps) {
               />
               <button
                 type="submit"
-                className="absolute bottom-3 right-3 rounded-lg bg-gray-900 dark:bg-gray-100 p-2 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 disabled:opacity-50"
+                className="absolute bottom-3 right-3 rounded-lg bg-primary p-2 text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
               >
                 <SendIcon />
               </button>

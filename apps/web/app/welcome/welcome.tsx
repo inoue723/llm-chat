@@ -36,8 +36,8 @@ export function Welcome({
           </div>
         </header>
         <div className="max-w-[300px] w-full space-y-6 px-4">
-          <nav className="rounded-3xl border border-gray-200 p-6 dark:border-gray-700 space-y-4">
-            <p className="leading-6 text-gray-700 dark:text-gray-200 text-center">
+          <nav className="rounded-3xl border border-border p-6 space-y-4">
+            <p className="leading-6 text-foreground text-center">
               What&apos;s next?
             </p>
             <ul>
@@ -56,7 +56,7 @@ export function Welcome({
               ))}
             </ul>
           </nav>
-          <section className="rounded-3xl border border-gray-200 p-6 dark:border-gray-700 space-y-4">
+          <section className="rounded-3xl border border-border p-6 space-y-4">
             <Form
               method="post"
               className="space-y-4 w-full max-w-lg"
@@ -74,7 +74,7 @@ export function Welcome({
                 name="title"
                 placeholder="Title"
                 required
-                className="w-full dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:focus:ring-blue-500 h-10 px-3 rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500"
+                className="w-full bg-background text-foreground dark:focus:ring-blue-500 h-10 px-3 rounded-lg border border-border focus:ring-1 focus:ring-blue-500"
               />
               
               <button

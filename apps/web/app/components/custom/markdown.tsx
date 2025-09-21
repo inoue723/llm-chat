@@ -30,7 +30,7 @@ export function getMarkdown(theme?: string) {
               </SyntaxHighlighter>
             ) : (
               <code
-                className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-1 py-0.5 rounded text-sm font-mono"
+                className="bg-muted text-muted-foreground px-1 py-0.5 rounded text-sm font-mono"
                 {...rest}
               >
                 {children}
@@ -44,7 +44,7 @@ export function getMarkdown(theme?: string) {
             const { node, ...rest } = props;
             return (
               <blockquote
-                className="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400 my-4"
+                className="border-l-4 border-border pl-4 italic text-muted-foreground my-4"
                 {...rest}
               >
                 {props.children}
@@ -56,7 +56,7 @@ export function getMarkdown(theme?: string) {
             return (
               <div className="overflow-x-auto">
                 <table
-                  className="min-w-full border border-gray-300 dark:border-gray-600 rounded-lg"
+                  className="min-w-full border border-border rounded-lg"
                   {...rest}
                 >
                   {props.children}
@@ -68,7 +68,7 @@ export function getMarkdown(theme?: string) {
             const { node, ...rest } = props;
             return (
               <th
-                className="border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 px-3 py-2 text-left font-semibold"
+                className="border border-border bg-secondary px-3 py-2 text-left font-semibold"
                 {...rest}
               >
                 {props.children}
@@ -79,7 +79,7 @@ export function getMarkdown(theme?: string) {
             const { node, ...rest } = props;
             return (
               <td
-                className="border border-gray-300 dark:border-gray-600 px-3 py-2"
+                className="border border-border px-3 py-2"
                 {...rest}
               >
                 {props.children}
@@ -106,7 +106,7 @@ export function getMarkdown(theme?: string) {
             const { node, ...rest } = props;
             return (
               <h1
-                className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-6 mb-4"
+                className="text-2xl font-bold text-foreground mt-6 mb-4"
                 {...rest}
               >
                 {props.children}
@@ -117,7 +117,7 @@ export function getMarkdown(theme?: string) {
             const { node, ...rest } = props;
             return (
               <h2
-                className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-5 mb-3"
+                className="text-xl font-bold text-foreground mt-5 mb-3"
                 {...rest}
               >
                 {props.children}
@@ -128,7 +128,7 @@ export function getMarkdown(theme?: string) {
             const { node, ...rest } = props;
             return (
               <h3
-                className="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-4 mb-3"
+                className="text-lg font-semibold text-foreground mt-4 mb-3"
                 {...rest}
               >
                 {props.children}
