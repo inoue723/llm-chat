@@ -9,3 +9,8 @@ syncInjectedDepsAfterScripts:
 injectWorkspacePackages: true
 
 minimumReleaseAge: 2880 # 2 days
+minimumReleaseAgeExclude:
+  # ai sdkの不具合があるので一時的に除外
+  # https://github.com/vercel/ai/issues/8469
+  - 'ai'
+  - '@ai-sdk/*'
