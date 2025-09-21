@@ -85,6 +85,7 @@ export default function Home({ actionData }: Route.ComponentProps) {
                 placeholder="メッセージを入力してください..."
                 className="w-full resize-none rounded-2xl border border-border bg-input px-4 py-4 pr-12 text-foreground placeholder-muted-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring shadow-sm"
                 required
+                // biome-ignore lint/a11y/noAutofocus: ここは許して
                 autoFocus
                 rows={4}
                 onInput={(e) => {
