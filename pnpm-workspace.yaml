@@ -7,3 +7,5 @@ onlyBuiltDependencies:
 syncInjectedDepsAfterScripts:
   - build
 injectWorkspacePackages: true
+
+minimumReleaseAge: 2880 # 2 days
