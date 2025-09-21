@@ -11,4 +11,5 @@ export default [
     route("chats/:chatId", "routes/chats/$chatId.tsx"),
   ]),
   route("chats/:chatId/messages/create", "routes/chats/messages/create.ts"),
+  route("chats/:chatId/delete", "routes/chats/$chatId.delete.tsx"),
 ] satisfies RouteConfig;

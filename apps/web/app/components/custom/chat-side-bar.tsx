@@ -1,5 +1,5 @@
 import { MessageSquare, Plus, Trash2 } from "lucide-react";
-import { NavLink } from "react-router";
+import { NavLink, useFetcher, useLocation, useNavigate } from "react-router";
 import { Button } from "~/components/ui/button";
 
 interface Chat {
@@ -19,6 +19,26 @@ export function ChatSidebar({
   activeChat,
   onNewChat,
 }: ChatSidebarProps) {
+  const fetcher = useFetcher();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleDelete = (e: React.MouseEvent, chatId: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (confirm("このチャットを削除してもよろしいですか？")) {
+      fetcher.submit(null, {
+        method: "POST",
+        action: `/chats/${chatId}/delete`,
+      });
+
+      // 削除したチャットを表示中の場合はホームに遷移
+      if (location.pathname === `/chats/${chatId}`) {
+        navigate("/");
+      }
+    }
+  };
+
   return (
     <div className="w-64 lg:w-64 md:w-56 sm:w-48 bg-gray-900 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col h-full shrink-0">
       <div className="p-4 border-b border-gray-200 dark:border-gray-700">
@@ -59,6 +79,17 @@ export function ChatSidebar({
                     })}
                   </p>
                 </div>
+                <button
+                  type="button"
+                  onClick={(e) => handleDelete(e, chat.id)}
+                  className="absolute right-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-red-100 dark:hover:bg-red-900 rounded"
+                  aria-label="チャットを削除"
+                >
+                  <Trash2
+                    size={14}
+                    className="text-red-600 dark:text-red-400"
+                  />
+                </button>
               </NavLink>
             ))}
           </div>
