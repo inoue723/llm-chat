@@ -7,13 +7,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
-    "pnpm": "10.14.0",
+    "pnpm": "10.17.0",
     "npm": "please_use_pnpm_instead"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.14.0",
+  "packageManager": "pnpm@10.17.0",
   "devDependencies": {
     "@biomejs/biome": "2.1.4",
     "supabase": "^2.33.9"
