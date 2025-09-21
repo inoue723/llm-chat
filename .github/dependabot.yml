@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: /
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "10:00"
+      timezone: Asia/Tokyo
+    groups:
+      react-router:
+        patterns:
+          - "@react-router/*"
+          - "react-router"
+      production:
+        dependency-type: production
+        update-types:
+          - patch
+          - minor
+      development:
+        dependency-type: development
+        update-types:
+          - patch
+          - minor
+      
