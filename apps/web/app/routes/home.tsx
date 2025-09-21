@@ -69,7 +69,7 @@ export default function Home({ actionData }: Route.ComponentProps) {
               <select
                 name="model"
                 required
-                className="w-full rounded-lg border border-border bg-background px-3 py-2 text-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
               >
                 <option value="">モデルを選択...</option>
                 <option value="claude-sonnet-4" selected>
@@ -83,7 +83,7 @@ export default function Home({ actionData }: Route.ComponentProps) {
               <textarea
                 name="message"
                 placeholder="メッセージを入力してください..."
-                className="w-full resize-none rounded-2xl border border-border bg-background px-4 py-4 pr-12 text-foreground placeholder-muted-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring shadow-sm"
+                className="w-full resize-none rounded-2xl border border-border bg-input px-4 py-4 pr-12 text-foreground placeholder-muted-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring shadow-sm"
                 required
                 autoFocus
                 rows={4}

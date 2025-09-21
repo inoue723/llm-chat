@@ -1,7 +1,7 @@
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { eq } from "drizzle-orm";
-import { SendIcon, Loader2 } from "lucide-react";
+import { Loader2, SendIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useRef } from "react";
 import { href } from "react-router";
@@ -175,9 +175,7 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
               }
               data-role={message.role}
               className={`group ${
-                message.role === "user"
-                  ? "bg-background"
-                  : "bg-secondary"
+                message.role === "user" ? "bg-card" : "bg-muted"
               }`}
             >
               <div className="mx-auto max-w-4xl px-4 py-6">
@@ -186,8 +184,8 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
                     <div
                       className={`flex h-8 w-8 items-center justify-center rounded-full ${
                         message.role === "user"
-                          ? "bg-blue-600 text-white"
-                          : "bg-green-600 text-white"
+                          ? "bg-blue-400 text-white"
+                          : "bg-primary text-primary-foreground"
                       }`}
                     >
                       {message.role === "user" ? "あ" : "AI"}
@@ -215,38 +213,39 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
             </div>
           );
         })}
-        {status === "streaming" && messages[messages.length - 1]?.role !== "assistant" && (
-          <div className="bg-secondary">
-            <div className="mx-auto max-w-4xl px-4 py-6">
-              <div className="flex gap-4">
-                <div className="flex-shrink-0">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-600 text-white">
-                    AI
+        {status === "streaming" &&
+          messages[messages.length - 1]?.role !== "assistant" && (
+            <div className="bg-secondary">
+              <div className="mx-auto max-w-4xl px-4 py-6">
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-600 text-white">
+                      AI
+                    </div>
                   </div>
-                </div>
-                <div className="flex-1">
-                  <div className="font-semibold text-foreground mb-2">
-                    アシスタント
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <div
-                      className="h-2 w-2 bg-muted-foreground rounded-full animate-bounce"
-                      style={{ animationDelay: "0ms" }}
-                    ></div>
-                    <div
-                      className="h-2 w-2 bg-muted-foreground rounded-full animate-bounce"
-                      style={{ animationDelay: "150ms" }}
-                    ></div>
-                    <div
-                      className="h-2 w-2 bg-muted-foreground rounded-full animate-bounce"
-                      style={{ animationDelay: "300ms" }}
-                    ></div>
+                  <div className="flex-1">
+                    <div className="font-semibold text-foreground mb-2">
+                      アシスタント
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <div
+                        className="h-2 w-2 bg-muted-foreground rounded-full animate-bounce"
+                        style={{ animationDelay: "0ms" }}
+                      ></div>
+                      <div
+                        className="h-2 w-2 bg-muted-foreground rounded-full animate-bounce"
+                        style={{ animationDelay: "150ms" }}
+                      ></div>
+                      <div
+                        className="h-2 w-2 bg-muted-foreground rounded-full animate-bounce"
+                        style={{ animationDelay: "300ms" }}
+                      ></div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
         {/* 動的な高さ調整用のスペーサー */}
         <div ref={spacerRef} aria-hidden="true" />
@@ -271,7 +270,7 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
               <textarea
                 name="message"
                 placeholder="メッセージを入力..."
-                className="flex-1 resize-none rounded-2xl border border-border bg-background px-4 py-3 pr-12 text-foreground placeholder-muted-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
+                className="flex-1 resize-none rounded-2xl border border-border bg-input px-4 py-3 pr-12 text-foreground placeholder-muted-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
                 disabled={status !== "ready"}
                 rows={1}
                 onKeyDown={(e) => {

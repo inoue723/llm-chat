@@ -35,11 +35,11 @@ export function ChatSidebar({ chats, onNewChat }: ChatSidebarProps) {
   };
 
   return (
-    <div className="w-64 lg:w-64 md:w-56 sm:w-48 bg-secondary dark:bg-secondary border-r border-border flex flex-col h-full shrink-0">
+    <div className="w-64 lg:w-64 md:w-56 sm:w-48 bg-sidebar border-r border-border flex flex-col h-full shrink-0">
       <div className="p-4 border-b border-border">
         <Button
           onClick={onNewChat}
-          className="w-full flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white"
+          className="w-full flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground justify-center"
         >
           <Plus size={16} />
           新しいチャット
@@ -61,7 +61,7 @@ export function ChatSidebar({ chats, onNewChat }: ChatSidebarProps) {
                   `group relative flex items-center p-3 rounded-lg cursor-pointer transition-colors ${
                     isActive
                       ? "bg-primary text-primary-foreground shadow-md hover:bg-primary/90"
-                      : "hover:bg-secondary hover:text-secondary-foreground"
+                      : "hover:bg-secondary"
                   }`
                 }
                 to={`/chats/${chat.id}`}
