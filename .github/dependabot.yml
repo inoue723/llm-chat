@@ -8,6 +8,8 @@ updates:
       time: "10:00"
       timezone: Asia/Tokyo
     groups:
+      cooldown:
+        default-days: 2
       production:
         dependency-type: production
         update-types:
@@ -30,4 +32,3 @@ updates:
         patterns:
           - "@react-router/*"
           - "react-router"
-      
