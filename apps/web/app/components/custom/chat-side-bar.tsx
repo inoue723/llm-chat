@@ -10,15 +10,10 @@ interface Chat {
 
 interface ChatSidebarProps {
   chats: Chat[];
-  activeChat?: string;
   onNewChat: () => void;
 }
 
-export function ChatSidebar({
-  chats,
-  activeChat,
-  onNewChat,
-}: ChatSidebarProps) {
+export function ChatSidebar({ chats, onNewChat }: ChatSidebarProps) {
   const fetcher = useFetcher();
   const navigate = useNavigate();
   const location = useLocation();
@@ -62,34 +57,48 @@ export function ChatSidebar({
             {chats.map((chat) => (
               <NavLink
                 key={chat.id}
-                className={`group relative flex items-center p-3 rounded-lg cursor-pointer transition-colors ${
-                  activeChat === chat.id
-                    ? "bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100"
-                    : "hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
-                }`}
+                className={({ isActive }) =>
+                  `group relative flex items-center p-3 rounded-lg cursor-pointer transition-colors ${
+                    isActive
+                      ? "bg-primary text-primary-foreground shadow-md hover:bg-primary/90"
+                      : "hover:bg-secondary hover:text-secondary-foreground"
+                  }`
+                }
                 to={`/chats/${chat.id}`}
               >
-                <MessageSquare size={16} className="mr-2 flex-shrink-0" />
-                <div className="flex-1 min-w-0">
-                  <p className="truncate text-sm font-medium">{chat.title}</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    {chat.timestamp.toLocaleDateString("ja-JP", {
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={(e) => handleDelete(e, chat.id)}
-                  className="absolute right-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-red-100 dark:hover:bg-red-900 rounded"
-                  aria-label="チャットを削除"
-                >
-                  <Trash2
-                    size={14}
-                    className="text-red-600 dark:text-red-400"
-                  />
-                </button>
+                {({ isActive }) => (
+                  <>
+                    <MessageSquare size={16} className="mr-2 flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="truncate text-sm font-medium">
+                        {chat.title}
+                      </p>
+                      <p
+                        className={`text-xs ${
+                          isActive
+                            ? "text-primary-foreground/90"
+                            : "text-secondary-foreground"
+                        }`}
+                      >
+                        {chat.timestamp.toLocaleDateString("ja-JP", {
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={(e) => handleDelete(e, chat.id)}
+                      className={`absolute right-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-destructive`}
+                      aria-label="チャットを削除"
+                    >
+                      <Trash2
+                        size={14}
+                        className="text-destructive-foreground"
+                      />
+                    </button>
+                  </>
+                )}
               </NavLink>
             ))}
           </div>

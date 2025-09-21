@@ -9,13 +9,11 @@ interface MobileSidebarProps {
     title: string;
     timestamp: Date;
   }>;
-  activeChat?: string;
   onNewChat: () => void;
 }
 
 export function MobileSidebar({
   chats,
-  activeChat,
   onNewChat,
 }: MobileSidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -62,7 +60,6 @@ export function MobileSidebar({
           </Button>
           <ChatSidebar
             chats={chats}
-            activeChat={activeChat}
             onNewChat={onNewChat}
           />
         </div>
