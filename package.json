@@ -16,6 +16,6 @@
   "packageManager": "pnpm@10.17.0",
   "devDependencies": {
     "@biomejs/biome": "2.2.4",
-    "supabase": "^2.40.7"
+    "supabase": "^2.45.5"
   }
 }
