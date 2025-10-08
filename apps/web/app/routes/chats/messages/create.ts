@@ -1,4 +1,5 @@
 import { anthropic } from "@ai-sdk/anthropic";
+import { google } from "@ai-sdk/google";
 import { openai } from "@ai-sdk/openai";
 import {
   convertToModelMessages,
@@ -12,6 +13,7 @@ import { MockLanguageModelV2 } from "ai/test";
 import { eq } from "drizzle-orm";
 import { database } from "~/database/context";
 import { messages } from "~/database/schema";
+import type { ModelId } from "~/lib/models";
 import type { Route } from "../+types/$chatId";
 import { getMockChunks } from "./mockMessage";
 
@@ -28,7 +30,7 @@ export async function action({ request, params }: Route.ActionArgs) {
     .orderBy(messages.createdAt)
     .limit(1);
 
-  const selectedModel = firstUserMessage[0].modelId;
+  const selectedModel = firstUserMessage[0].modelId as ModelId;
 
   // ユーザーの最新メッセージをDBに保存
   const lastUserMessage = uiMessages[uiMessages.length - 1];
@@ -66,20 +68,34 @@ export async function action({ request, params }: Route.ActionArgs) {
     });
   };
 
-  const getModel = (modelId: string) => {
+  const getModel = (modelId: ModelId) => {
     // 開発環境の場合はモックモデルを使用
     if (process.env.NODE_ENV === "development") {
       return getMockModel();
     }
 
-    switch (modelId) {
-      case "claude-sonnet-4":
-        return anthropic("claude-sonnet-4-20250514");
-      case "gpt-5":
-        return openai("gpt-5-chat-latest");
-      default:
-        throw new Error(`Invalid model: ${modelId}`);
+    // Claude models
+    if (modelId === "claude-sonnet-4-5-20250929") {
+      return anthropic("claude-sonnet-4-5-20250929");
     }
+    if (modelId === "claude-opus-4-1-20250805") {
+      return anthropic("claude-opus-4-1-20250805");
+    }
+
+    // OpenAI models
+    if (modelId === "gpt-5-2025-08-07") {
+      return openai("gpt-5-2025-08-07");
+    }
+
+    // Gemini models
+    if (modelId === "gemini-2.5-pro") {
+      return google("gemini-2.5-pro");
+    }
+    if (modelId === "gemini-2.5-pro-preview-tts") {
+      return google("gemini-2.5-pro-preview-tts");
+    }
+
+    throw new Error(`Invalid model: ${modelId}`);
   };
 
   // See https://ai-sdk.dev/docs/ai-sdk-ui/chatbot-message-persistence#option-2-setting-ids-with-createuimessagestream
