@@ -14,6 +14,7 @@ import { eq } from "drizzle-orm";
 import { database } from "~/database/context";
 import { messages } from "~/database/schema";
 import type { ModelId } from "~/lib/models";
+import { assertNever } from "~/lib/utils/assertNever";
 import type { Route } from "../+types/$chatId";
 import { getMockChunks } from "./mockMessage";
 
@@ -74,28 +75,22 @@ export async function action({ request, params }: Route.ActionArgs) {
       return getMockModel();
     }
 
-    // Claude models
-    if (modelId === "claude-sonnet-4-5-20250929") {
-      return anthropic("claude-sonnet-4-5-20250929");
+    switch (modelId) {
+      case "claude-sonnet-4-5-20250929":
+        return anthropic("claude-sonnet-4-5-20250929");
+      case "claude-opus-4-1-20250805":
+        return anthropic("claude-opus-4-1-20250805");
+      case "gpt-5-2025-08-07":
+        return openai("gpt-5-2025-08-07");
+      case "gpt-5-pro-2025-10-06":
+        return openai("gpt-5-pro-2025-10-06");
+      case "gemini-2.5-pro":
+        return google("gemini-2.5-pro");
+      case "gemini-2.5-pro-preview-tts":
+        return google("gemini-2.5-pro-preview-tts");
+      default:
+        return assertNever(modelId);
     }
-    if (modelId === "claude-opus-4-1-20250805") {
-      return anthropic("claude-opus-4-1-20250805");
-    }
-
-    // OpenAI models
-    if (modelId === "gpt-5-2025-08-07") {
-      return openai("gpt-5-2025-08-07");
-    }
-
-    // Gemini models
-    if (modelId === "gemini-2.5-pro") {
-      return google("gemini-2.5-pro");
-    }
-    if (modelId === "gemini-2.5-pro-preview-tts") {
-      return google("gemini-2.5-pro-preview-tts");
-    }
-
-    throw new Error(`Invalid model: ${modelId}`);
   };
 
   // See https://ai-sdk.dev/docs/ai-sdk-ui/chatbot-message-persistence#option-2-setting-ids-with-createuimessagestream
