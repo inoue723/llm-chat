@@ -69,8 +69,8 @@ export async function action({ request, params }: Route.ActionArgs) {
   };
 
   const getModel = (modelId: ModelId) => {
-    // 開発環境の場合はモックモデルを使用
-    if (process.env.NODE_ENV === "development") {
+    // MOCK_LLM_REQUESTが"true"の場合はモックモデルを使用
+    if (process.env.MOCK_LLM_REQUEST === "true") {
       return getMockModel();
     }
 
