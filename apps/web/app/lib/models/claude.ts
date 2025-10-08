@@ -16,11 +16,11 @@ export const claudeModelIds = [
 /**
  * Claude model aliases that point to specific versions
  */
-export const claudeModelAliases = {
-  "claude-sonnet-4-5": "claude-sonnet-4-5-20250929",
-  "claude-opus-4-1": "claude-opus-4-1-20250805",
-  "claude-3-5-haiku-latest": "claude-3-5-haiku-20241022",
-} as const;
+// export const claudeModelAliases = {
+//   "claude-sonnet-4-5": "claude-sonnet-4-5-20250929",
+//   "claude-opus-4-1": "claude-opus-4-1-20250805",
+//   "claude-3-5-haiku-latest": "claude-3-5-haiku-20241022",
+// } as const;
 
 export type ClaudeModelId = (typeof claudeModelIds)[number];
-export type ClaudeModelAlias = keyof typeof claudeModelAliases;
+// export type ClaudeModelAlias = keyof typeof claudeModelAliases;
