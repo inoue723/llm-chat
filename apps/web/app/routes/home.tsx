@@ -2,6 +2,7 @@ import { SendIcon } from "lucide-react";
 import { Form, redirect } from "react-router";
 import { database } from "~/database/context";
 import { chats, messages } from "~/database/schema";
+import { allModelIds, getModelProps } from "~/lib/models";
 import type { Route } from "./+types/home";
 
 export function meta() {
@@ -69,13 +70,16 @@ export default function Home({ actionData }: Route.ComponentProps) {
               <select
                 name="model"
                 required
+                defaultValue="claude-sonnet-4-5-20250929"
                 className="w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
               >
                 <option value="">モデルを選択...</option>
-                <option value="claude-sonnet-4" selected>
-                  Claude Sonnet 4
-                </option>
-                <option value="gpt-5">ChatGPT 5</option>
+                {allModelIds.map((modelId) => (
+                  <option key={modelId} value={modelId}>
+                    {getModelProps(modelId).name} (
+                    {getModelProps(modelId).provider})
+                  </option>
+                ))}
               </select>
             </div>
 

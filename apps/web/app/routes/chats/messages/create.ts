@@ -1,4 +1,5 @@
 import { anthropic } from "@ai-sdk/anthropic";
+import { google } from "@ai-sdk/google";
 import { openai } from "@ai-sdk/openai";
 import {
   convertToModelMessages,
@@ -12,6 +13,8 @@ import { MockLanguageModelV2 } from "ai/test";
 import { eq } from "drizzle-orm";
 import { database } from "~/database/context";
 import { messages } from "~/database/schema";
+import type { ModelId } from "~/lib/models";
+import { assertNever } from "~/lib/utils/assertNever";
 import type { Route } from "../+types/$chatId";
 import { getMockChunks } from "./mockMessage";
 
@@ -28,7 +31,7 @@ export async function action({ request, params }: Route.ActionArgs) {
     .orderBy(messages.createdAt)
     .limit(1);
 
-  const selectedModel = firstUserMessage[0].modelId;
+  const selectedModel = firstUserMessage[0].modelId as ModelId;
 
   // ユーザーの最新メッセージをDBに保存
   const lastUserMessage = uiMessages[uiMessages.length - 1];
@@ -66,19 +69,27 @@ export async function action({ request, params }: Route.ActionArgs) {
     });
   };
 
-  const getModel = (modelId: string) => {
-    // 開発環境の場合はモックモデルを使用
-    if (process.env.NODE_ENV === "development") {
+  const getModel = (modelId: ModelId) => {
+    // MOCK_LLM_REQUESTが"true"の場合はモックモデルを使用
+    if (process.env.MOCK_LLM_REQUEST === "true") {
       return getMockModel();
     }
 
     switch (modelId) {
-      case "claude-sonnet-4":
-        return anthropic("claude-sonnet-4-20250514");
-      case "gpt-5":
-        return openai("gpt-5-chat-latest");
+      case "claude-sonnet-4-5-20250929":
+        return anthropic("claude-sonnet-4-5-20250929");
+      case "claude-opus-4-1-20250805":
+        return anthropic("claude-opus-4-1-20250805");
+      case "gpt-5-2025-08-07":
+        return openai("gpt-5-2025-08-07");
+      case "gpt-5-pro-2025-10-06":
+        return openai("gpt-5-pro-2025-10-06");
+      case "gemini-2.5-pro":
+        return google("gemini-2.5-pro");
+      case "gemini-2.5-pro-preview-tts":
+        return google("gemini-2.5-pro-preview-tts");
       default:
-        throw new Error(`Invalid model: ${modelId}`);
+        return assertNever(modelId);
     }
   };
 
