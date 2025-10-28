@@ -40,8 +40,8 @@ importers:
         specifier: 7.9.4
         version: 7.9.4(react-router@7.9.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)
       ai:
-        specifier: 5.1.0-beta.4
-        version: 5.1.0-beta.4(zod@4.1.12)
+        specifier: 5.1.0-beta.28
+        version: 5.1.0-beta.28(zod@4.1.12)
       class-variance-authority:
         specifier: 0.7.1
         version: 0.7.1
@@ -163,11 +163,11 @@ packages:
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
-  '@ai-sdk/gateway@1.1.0-beta.3':
-    resolution: {integrity: sha512-g9NAED+r2ZmZQZAwjyF3nAe3ywH5ndLPnHNvb5tWCycETODDQSw93ZOA6GOp188VhPIQbGC6wqZdqz3D2FXjhQ==}
+  '@ai-sdk/gateway@1.1.0-beta.19':
+    resolution: {integrity: sha512-O/XD8KdVrMIt/S7l+0QqdiyCL2PEC2CGM8i31bn/5P2JsPMdfDI9LX/VK4lLWNfuWCQePFnmiondnYnoqKF+Hg==}
     engines: {node: '>=18'}
     peerDependencies:
-      zod: ^3.25.76 || ^4
+      zod: ^3.25.76 || ^4.1.8
 
   '@ai-sdk/gateway@2.0.0':
     resolution: {integrity: sha512-Gj0PuawK7NkZuyYgO/h5kDK/l6hFOjhLdTq3/Lli1FTl47iGmwhH1IZQpAL3Z09BeFYWakcwUmn02ovIm2wy9g==}
@@ -193,18 +193,18 @@ packages:
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
-  '@ai-sdk/provider-utils@3.1.0-beta.1':
-    resolution: {integrity: sha512-1M8khOMe5Ljay+EoiEHkv1gu9QCRc4qT9sbSkwsg2pTh97x70XpmhtWG/4D331xiWArFxZWn+tuqNhDj9t3+HQ==}
+  '@ai-sdk/provider-utils@3.1.0-beta.9':
+    resolution: {integrity: sha512-WlKYWOP0bVWadrzKCWE9FcTTCYyNjR/8lTCIaFea1wiqZ+uqgC+91vcC0wtwuAyHr306o/bgeAZxRq8gF/0SMg==}
     engines: {node: '>=18'}
     peerDependencies:
-      zod: ^3.25.76 || ^4
+      zod: ^3.25.76 || ^4.1.8
 
   '@ai-sdk/provider@2.0.0':
     resolution: {integrity: sha512-6o7Y2SeO9vFKB8lArHXehNuusnpddKPk7xqL7T2/b+OvXMRIXUO1rR4wcv1hAFUAT9avGZshty3Wlua/XA7TvA==}
     engines: {node: '>=18'}
 
-  '@ai-sdk/provider@2.1.0-beta.0':
-    resolution: {integrity: sha512-QleoQVPoN02qpK2VXtKrDnpB59uNVIdB+5YMhKeJc4otlyVYFZLWeEax/zCe63VghuIZN9gV5KMxmF+yOUsWfw==}
+  '@ai-sdk/provider@2.1.0-beta.5':
+    resolution: {integrity: sha512-gu/aV+8iTb0IjHmFO6eDuevp4E0fbtXqSj0RcKPttgedAbWY3uMe+vVgfe/j3bfbQfN7FjGkFDLS0xIirga7pA==}
     engines: {node: '>=18'}
 
   '@ai-sdk/react@2.0.76':
@@ -216,10 +216,6 @@ packages:
     peerDependenciesMeta:
       zod:
         optional: true
-
-  '@ai-sdk/test-server@1.0.0-beta.0':
-    resolution: {integrity: sha512-p2F6XivJrFysDdQLKwSNBFJ1pnHcFTz4XMr8xHQ4gpR55Vajvi21RUh70vH1vahpyTMNJcZXkwHD9EAanjOjdQ==}
-    engines: {node: '>=18'}
 
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
@@ -1302,11 +1298,11 @@ packages:
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
-  ai@5.1.0-beta.4:
-    resolution: {integrity: sha512-vkqS2Fh6XmgehAiRhQK0fu3VGVbxRO03+/SXGY2tg33Ab9fZVbztooKOvvuwIp4BYagNfwXxuZCqFb5GJ9Z8Vw==}
+  ai@5.1.0-beta.28:
+    resolution: {integrity: sha512-MMGM5h3hB2ty9aeOYKyYkhdy8SW298Bgo3k+388+mfgAPbJUDOzIexnk6KynUXHwls5y/tUBafHe0v2YAupPbg==}
     engines: {node: '>=18'}
     peerDependencies:
-      zod: ^3.25.76 || ^4
+      zod: ^3.25.76 || ^4.1.8
 
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -2038,6 +2034,9 @@ packages:
 
   magic-string@0.30.19:
     resolution: {integrity: sha512-2N21sPY9Ws53PZvsEpVtNuSW+ScYbQdp4b9qUaL+9QkHUrGFKo56Lg9Emg5s9V/qrtNBmiR01sYhUOwu3H+VOw==}
+
+  magic-string@0.30.21:
+    resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
 
   marked@16.4.1:
     resolution: {integrity: sha512-ntROs7RaN3EvWfy3EZi14H4YxmT6A5YvywfhO+0pm+cH/dnSQRmdAmoFIc3B9aiwTehyk7pESH4ofyBY+V5hZg==}
@@ -2823,10 +2822,11 @@ snapshots:
       '@ai-sdk/provider-utils': 3.0.12(zod@4.1.12)
       zod: 4.1.12
 
-  '@ai-sdk/gateway@1.1.0-beta.3(zod@4.1.12)':
+  '@ai-sdk/gateway@1.1.0-beta.19(zod@4.1.12)':
     dependencies:
-      '@ai-sdk/provider': 2.1.0-beta.0
-      '@ai-sdk/provider-utils': 3.1.0-beta.1(zod@4.1.12)
+      '@ai-sdk/provider': 2.1.0-beta.5
+      '@ai-sdk/provider-utils': 3.1.0-beta.9(zod@4.1.12)
+      '@vercel/oidc': 3.0.3
       zod: 4.1.12
 
   '@ai-sdk/gateway@2.0.0(zod@4.1.12)':
@@ -2855,9 +2855,9 @@ snapshots:
       eventsource-parser: 3.0.6
       zod: 4.1.12
 
-  '@ai-sdk/provider-utils@3.1.0-beta.1(zod@4.1.12)':
+  '@ai-sdk/provider-utils@3.1.0-beta.9(zod@4.1.12)':
     dependencies:
-      '@ai-sdk/provider': 2.1.0-beta.0
+      '@ai-sdk/provider': 2.1.0-beta.5
       '@standard-schema/spec': 1.0.0
       eventsource-parser: 3.0.6
       zod: 4.1.12
@@ -2866,7 +2866,7 @@ snapshots:
     dependencies:
       json-schema: 0.4.0
 
-  '@ai-sdk/provider@2.1.0-beta.0':
+  '@ai-sdk/provider@2.1.0-beta.5':
     dependencies:
       json-schema: 0.4.0
 
@@ -2879,8 +2879,6 @@ snapshots:
       throttleit: 2.1.0
     optionalDependencies:
       zod: 4.1.12
-
-  '@ai-sdk/test-server@1.0.0-beta.0': {}
 
   '@babel/code-frame@7.27.1':
     dependencies:
@@ -3735,7 +3733,7 @@ snapshots:
       '@mjackson/node-fetch-server': 0.7.0
       es-module-lexer: 1.7.0
       estree-walker: 3.0.3
-      magic-string: 0.30.19
+      magic-string: 0.30.21
       periscopic: 4.0.2
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
@@ -3759,12 +3757,11 @@ snapshots:
       '@opentelemetry/api': 1.9.0
       zod: 4.1.12
 
-  ai@5.1.0-beta.4(zod@4.1.12):
+  ai@5.1.0-beta.28(zod@4.1.12):
     dependencies:
-      '@ai-sdk/gateway': 1.1.0-beta.3(zod@4.1.12)
-      '@ai-sdk/provider': 2.1.0-beta.0
-      '@ai-sdk/provider-utils': 3.1.0-beta.1(zod@4.1.12)
-      '@ai-sdk/test-server': 1.0.0-beta.0
+      '@ai-sdk/gateway': 1.1.0-beta.19(zod@4.1.12)
+      '@ai-sdk/provider': 2.1.0-beta.5
+      '@ai-sdk/provider-utils': 3.1.0-beta.9(zod@4.1.12)
       '@opentelemetry/api': 1.9.0
       zod: 4.1.12
 
@@ -4449,6 +4446,11 @@ snapshots:
   magic-string@0.30.19:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  magic-string@0.30.21:
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.5.5
+    optional: true
 
   marked@16.4.1: {}
 
