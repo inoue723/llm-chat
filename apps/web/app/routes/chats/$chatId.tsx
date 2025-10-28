@@ -1,13 +1,12 @@
-import { useChat } from "@ai-sdk/react";
-import { DefaultChatTransport, type UIMessage } from "ai";
+import { type UIMessage } from "ai";
 import { eq } from "drizzle-orm";
 import { Loader2, SendIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useRef } from "react";
-import { href } from "react-router";
 import z from "zod/v4";
 import { getMarkdown } from "~/components/custom/markdown";
 import { MemoizedMarkdown } from "~/components/custom/memorized-markdown";
+import { useChatContext } from "~/contexts/chat-context";
 import { database } from "~/database/context";
 import { chats, messages } from "~/database/schema";
 import type { Route } from "./+types/$chatId";
@@ -48,15 +47,23 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
 };
 
 export default function Chat({ params, loaderData }: Route.ComponentProps) {
-  const { messages, sendMessage, status, regenerate, error } = useChat({
-    id: params.chatId,
-    transport: new DefaultChatTransport({
-      api: href("/chats/:chatId/messages/create", { chatId: params.chatId }),
-    }),
-    messages: loaderData.messages,
-    generateId: () => crypto.randomUUID(),
-    experimental_throttle: 50,
-  });
+  const {
+    messages,
+    sendMessage,
+    status,
+    regenerate,
+    error,
+    setMessages,
+    setChatId,
+  } = useChatContext();
+
+  // 初回マウント時にchatIdとメッセージを設定
+  useEffect(() => {
+    setChatId(params.chatId);
+    if (loaderData.messages.length > 0) {
+      setMessages(loaderData.messages);
+    }
+  }, [params.chatId, loaderData.messages, setChatId, setMessages]);
   const theme = useTheme();
   const Markdown = getMarkdown(theme.resolvedTheme || "dark");
 
@@ -64,22 +71,6 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
   const latestUserMessageRef = useRef<HTMLDivElement>(null);
   const nextAssistantMessageRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
-
-  // 新規チャット開始時にAI応答を自動開始
-  useEffect(() => {
-    const url = new URL(window.location.href);
-    const shouldStart = url.searchParams.get("start") === "true";
-
-    if (shouldStart && messages.length > 0 && status === "ready") {
-      const lastMessage = messages[messages.length - 1];
-      if (lastMessage.role === "user") {
-        regenerate();
-        // クエリパラメータを削除
-        url.searchParams.delete("start");
-        window.history.replaceState({}, "", url.toString());
-      }
-    }
-  }, [messages, status, regenerate]);
 
   // 動的な高さ調整とスクロール制御（順序保証）
   useEffect(() => {

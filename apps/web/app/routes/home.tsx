@@ -1,7 +1,6 @@
 import { SendIcon } from "lucide-react";
-import { Form, redirect } from "react-router";
-import { database } from "~/database/context";
-import { chats, messages } from "~/database/schema";
+import { useEffect } from "react";
+import { useChatContext } from "~/contexts/chat-context";
 import { allModelIds, getModelProps } from "~/lib/models";
 import type { Route } from "./+types/home";
 
@@ -12,40 +11,16 @@ export function meta() {
   ];
 }
 
-export async function action({ request }: Route.ActionArgs) {
-  const formData = await request.formData();
-  const message = formData.get("message") as string;
-  const selectedModel = formData.get("model") as string;
+export default function Home(_props: Route.ComponentProps) {
+  const { setChatId, setModelId, sendMessage, messages } = useChatContext();
+  console.log("messages", messages);
 
-  if (!message.trim()) {
-    return { error: "メッセージを入力してください" };
-  }
+  // コンポーネントマウント時にchatIdとmodelIdをリセット
+  useEffect(() => {
+    setChatId(null);
+    setModelId(null);
+  }, [setChatId, setModelId]);
 
-  if (!selectedModel) {
-    return { error: "モデルを選択してください" };
-  }
-
-  const db = database();
-  const newChat = await db
-    .insert(chats)
-    .values({
-      title: message,
-    })
-    .returning({ id: chats.id });
-
-  const chatId = newChat[0].id;
-
-  await db.insert(messages).values({
-    chatId,
-    text: message,
-    role: "user",
-    modelId: selectedModel,
-  });
-
-  return redirect(`/chats/${chatId}?start=true`);
-}
-
-export default function Home({ actionData }: Route.ComponentProps) {
   return (
     <div className="flex-1 flex flex-col items-center justify-center px-4">
       <div className="w-full space-y-8">
@@ -58,7 +33,25 @@ export default function Home({ actionData }: Route.ComponentProps) {
           </p>
         </div>
 
-        <Form method="post" className="relative">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const form = e.currentTarget;
+            const formData = new FormData(form);
+            const message = formData.get("message") as string;
+            const model = formData.get("model") as string;
+            console.log("onsubmit")
+
+            if (message.trim() && model) {
+              console.log("setModelId and sendMessage")
+              setModelId(model);
+              sendMessage({ text: message, metadata: {
+                modelId: model,
+              } });
+            }
+          }}
+          className="relative"
+        >
           <div className="space-y-4">
             <div className="relative">
               <label
@@ -119,11 +112,7 @@ export default function Home({ actionData }: Route.ComponentProps) {
               </button>
             </div>
           </div>
-
-          {actionData?.error && (
-            <div className="mt-2 text-red-600 text-sm">{actionData.error}</div>
-          )}
-        </Form>
+        </form>
       </div>
     </div>
   );
