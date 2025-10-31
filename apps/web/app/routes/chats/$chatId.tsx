@@ -1,4 +1,3 @@
-import { type UIMessage } from "ai";
 import { eq } from "drizzle-orm";
 import { Loader2, SendIcon } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -9,6 +8,7 @@ import { MemoizedMarkdown } from "~/components/custom/memorized-markdown";
 import { useChatContext } from "~/contexts/chat-context";
 import { database } from "~/database/context";
 import { chats, messages } from "~/database/schema";
+import type { CustomUIMessage } from "~/lib/customUIMessage";
 import type { Route } from "./+types/$chatId";
 
 const chatIdSchema = z.uuidv4();
@@ -35,7 +35,7 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
     .where(eq(messages.chatId, chatId))
     .orderBy(messages.createdAt);
 
-  const uiMessages: UIMessage[] = dbMessages.map((msg) => ({
+  const uiMessages: CustomUIMessage[] = dbMessages.map((msg) => ({
     id: msg.id,
     role: msg.role as "user" | "assistant",
     parts: [{ type: "text", text: msg.text }],
@@ -47,15 +47,8 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
 };
 
 export default function Chat({ params, loaderData }: Route.ComponentProps) {
-  const {
-    messages,
-    sendMessage,
-    status,
-    regenerate,
-    error,
-    setMessages,
-    setChatId,
-  } = useChatContext();
+  const { messages, sendMessage, status, setMessages, setChatId } =
+    useChatContext();
 
   // 初回マウント時にchatIdとメッセージを設定
   useEffect(() => {
@@ -64,6 +57,7 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
       setMessages(loaderData.messages);
     }
   }, [params.chatId, loaderData.messages, setChatId, setMessages]);
+
   const theme = useTheme();
   const Markdown = getMarkdown(theme.resolvedTheme || "dark");
 

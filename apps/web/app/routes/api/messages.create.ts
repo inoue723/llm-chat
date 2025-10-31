@@ -13,6 +13,7 @@ import { MockLanguageModelV2 } from "ai/test";
 import { eq } from "drizzle-orm";
 import { database } from "~/database/context";
 import { chats, messages } from "~/database/schema";
+import type { CustomUIMessage } from "~/lib/customUIMessage";
 import type { ModelId } from "~/lib/models";
 import { assertNever } from "~/lib/utils/assertNever";
 import { getMockChunks } from "../chats/messages/mockMessage";
@@ -20,34 +21,44 @@ import { getMockChunks } from "../chats/messages/mockMessage";
 export async function action({ request }: { request: Request }) {
   const body = await request.json();
   console.log("Request body:", body);
-  const { messages: uiMessages, chatId: existingChatId }: { messages: UIMessage[]; chatId?: string; modelId?: ModelId } = body;
+  const {
+    messages: uiMessages,
+    id: chatId,
+  }: { messages: CustomUIMessage[]; id: string; modelId?: ModelId } = body;
 
   const db = database();
-  let chatId = existingChatId;
-  let selectedModel = body.messages[0].metadata.modelId;
+  let selectedModel = body.messages[0].metadata?.modelId;
   console.log("Received chatId:", chatId);
   console.log("Received modelId:", selectedModel);
+  const requestDate = new Date();
 
-  // chatIdがない場合は新規チャットを作成
-  if (!chatId) {
-    // 最初のユーザーメッセージからタイトルを生成
-    const firstUserMessage = uiMessages.find((msg) => msg.role === "user");
-    const title = firstUserMessage
-      ? firstUserMessage.parts
-          .filter((part) => part.type === "text")
-          .map((part) => part.text)
-          .join(" ")
-      : "新しいチャット";
+  const createChat = async (chatId: string): Promise<string | undefined> => {
+    const chat = await db.query.chats.findFirst({
+      where: eq(chats.id, chatId),
+    });
 
-    const newChat = await db
-      .insert(chats)
-      .values({
-        title,
-      })
-      .returning({ id: chats.id });
+    // chatIdがない場合は新規チャットを作成
+    if (!chat) {
+      // 最初のユーザーメッセージからタイトルを生成
+      const firstUserMessage = uiMessages.find((msg) => msg.role === "user");
+      const title = firstUserMessage
+        ? firstUserMessage.parts
+            .filter((part) => part.type === "text")
+            .map((part) => part.text)
+            .join(" ")
+        : "新しいチャット";
 
-    chatId = newChat[0].id;
-  }
+      const result = await db
+        .insert(chats)
+        .values({
+          id: chatId,
+          title,
+        })
+        .returning({ id: chats.id });
+
+      return result[0]?.id;
+    }
+  };
 
   // モデルIDが指定されていない場合は、DBから取得
   if (!selectedModel) {
@@ -66,25 +77,29 @@ export async function action({ request }: { request: Request }) {
   }
 
   // ユーザーの最新メッセージをDBに保存
-  const lastUserMessage = uiMessages[uiMessages.length - 1];
-  if (lastUserMessage && lastUserMessage.role === "user") {
-    const userMessageText = lastUserMessage.parts
-      .filter((part) => part.type === "text")
-      .map((part) => part.text)
-      .join(" ");
+  const createUserMessage = async () => {
+    console.log("Saving user message to DB");
+    const lastUserMessage = uiMessages[uiMessages.length - 1];
+    if (lastUserMessage && lastUserMessage.role === "user") {
+      const userMessageText = lastUserMessage.parts
+        .filter((part) => part.type === "text")
+        .map((part) => part.text)
+        .join(" ");
 
-    await db
-      .insert(messages)
-      .values({
-        id: lastUserMessage.id,
-        chatId,
-        text: userMessageText,
-        role: "user",
-        modelId: selectedModel,
-      })
-      .onConflictDoNothing()
-      .returning({ id: messages.id });
-  }
+      await db
+        .insert(messages)
+        .values({
+          id: lastUserMessage.id,
+          chatId,
+          text: userMessageText,
+          role: "user",
+          modelId: selectedModel,
+          createdAt: requestDate.toISOString(),
+        })
+        .onConflictDoNothing()
+        .returning({ id: messages.id });
+    }
+  };
 
   // DBとresponseのメッセージIDを一致させるために、事前にメッセージIDを生成しておく
   const newMessageId = crypto.randomUUID();
@@ -126,12 +141,22 @@ export async function action({ request }: { request: Request }) {
   };
 
   // See https://ai-sdk.dev/docs/ai-sdk-ui/chatbot-message-persistence#option-2-setting-ids-with-createuimessagestream
-  const stream = createUIMessageStream({
+  const stream = createUIMessageStream<CustomUIMessage>({
     execute: ({ writer }) => {
       writer.write({
         type: "start",
         messageId: newMessageId,
       });
+
+      createChat(chatId)
+        .then((data) => {
+          if (data) {
+            writer.write({ type: "data-chatCreated", data: { chatId } });
+          }
+        })
+        .then(() => {
+          createUserMessage();
+        });
 
       const result = streamText({
         model: getModel(selectedModel),
@@ -154,7 +179,6 @@ export async function action({ request }: { request: Request }) {
     },
     originalMessages: uiMessages,
   });
-  console.log(stream)
 
   return createUIMessageStreamResponse({ stream });
 }

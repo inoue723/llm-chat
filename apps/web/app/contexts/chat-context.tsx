@@ -1,36 +1,51 @@
 import { useChat as useAISDKChat } from "@ai-sdk/react";
-import { DefaultChatTransport, type UIMessage } from "ai";
+import { DefaultChatTransport } from "ai";
 import type { ReactNode } from "react";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { href, useNavigate } from "react-router";
+import { createContext, useContext, useEffect, useState } from "react";
+import { href, useNavigate, useNavigation } from "react-router";
+import type { CustomUIMessage } from "~/lib/customUIMessage";
+
+type CustomAISDKChat = ReturnType<typeof useAISDKChat<CustomUIMessage>>;
 
 interface ChatContextType {
-  chatId: string | null;
-  setChatId: (chatId: string | null) => void;
-  modelId: string | null;
-  setModelId: (modelId: string | null) => void;
-  messages: ReturnType<typeof useAISDKChat>["messages"];
-  sendMessage: ReturnType<typeof useAISDKChat>["sendMessage"];
-  status: ReturnType<typeof useAISDKChat>["status"];
-  regenerate: ReturnType<typeof useAISDKChat>["regenerate"];
-  error: ReturnType<typeof useAISDKChat>["error"];
-  setMessages: ReturnType<typeof useAISDKChat>["setMessages"];
+  chatId: string;
+  setChatId: (chatId: string) => void;
+  messages: CustomAISDKChat["messages"];
+  sendMessage: CustomAISDKChat["sendMessage"];
+  status: CustomAISDKChat["status"];
+  regenerate: CustomAISDKChat["regenerate"];
+  error: CustomAISDKChat["error"];
+  setMessages: CustomAISDKChat["setMessages"];
+  // startNewChat: ({ message, modelId }: { message: string, modelId: string }) => Promise<string>;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
 
 export function ChatProvider({ children }: { children: ReactNode }) {
-  const [chatId, setChatId] = useState<string | null>(null);
-  const [modelId, setModelId] = useState<string | null>(null);
+  const [chatId, setChatId] = useState<string>(crypto.randomUUID());
+  console.log("Current chatId:", chatId);
   const navigate = useNavigate();
+  const navigation = useNavigation();
 
-  const chat = useAISDKChat({
-    id: chatId ?? undefined,
+  useEffect(() => {
+    if (navigation.location?.pathname === "/") {
+      setChatId(crypto.randomUUID());
+    }
+  }, [navigation.location?.pathname]);
+
+  const chat = useAISDKChat<CustomUIMessage>({
+    id: chatId,
     transport: new DefaultChatTransport({
       api: href("/chats/messages/create"),
     }),
     generateId: () => crypto.randomUUID(),
     experimental_throttle: 50,
+    onData: (data) => {
+      console.log("Received message chunk:", data);
+      if (data.type === "data-chatCreated") {
+        navigate(`/chats/${(data.data as any).chatId}`);
+      }
+    },
   });
 
   return (
@@ -38,8 +53,6 @@ export function ChatProvider({ children }: { children: ReactNode }) {
       value={{
         chatId,
         setChatId,
-        modelId,
-        setModelId,
         messages: chat.messages,
         sendMessage: chat.sendMessage,
         status: chat.status,

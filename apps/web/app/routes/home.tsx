@@ -1,5 +1,6 @@
 import { SendIcon } from "lucide-react";
 import { useEffect } from "react";
+import { href, useNavigate } from "react-router";
 import { useChatContext } from "~/contexts/chat-context";
 import { allModelIds, getModelProps } from "~/lib/models";
 import type { Route } from "./+types/home";
@@ -12,14 +13,7 @@ export function meta() {
 }
 
 export default function Home(_props: Route.ComponentProps) {
-  const { setChatId, setModelId, sendMessage, messages } = useChatContext();
-  console.log("messages", messages);
-
-  // コンポーネントマウント時にchatIdとmodelIdをリセット
-  useEffect(() => {
-    setChatId(null);
-    setModelId(null);
-  }, [setChatId, setModelId]);
+  const { sendMessage } = useChatContext();
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center px-4">
@@ -34,20 +28,17 @@ export default function Home(_props: Route.ComponentProps) {
         </div>
 
         <form
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
             const form = e.currentTarget;
             const formData = new FormData(form);
             const message = formData.get("message") as string;
             const model = formData.get("model") as string;
-            console.log("onsubmit")
+            console.log("onsubmit");
 
             if (message.trim() && model) {
-              console.log("setModelId and sendMessage")
-              setModelId(model);
-              sendMessage({ text: message, metadata: {
-                modelId: model,
-              } });
+              console.log("setModelId and sendMessage");
+              sendMessage({ text: message, metadata: { modelId: model } });
             }
           }}
           className="relative"
