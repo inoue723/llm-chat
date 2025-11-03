@@ -53,9 +53,9 @@ export default function Chat({ params, loaderData }: Route.ComponentProps) {
   // 初回マウント時にchatIdとメッセージを設定
   useEffect(() => {
     setChatId(params.chatId);
-    if (loaderData.messages.length > 0) {
+    setTimeout(() => {
       setMessages(loaderData.messages);
-    }
+    }, 1);
   }, [params.chatId, loaderData.messages, setChatId, setMessages]);
 
   const theme = useTheme();
