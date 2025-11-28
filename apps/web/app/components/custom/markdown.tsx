@@ -4,11 +4,13 @@ import {
   oneDark,
   oneLight,
 } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import remarkGfm from "remark-gfm";
 
 export function getMarkdown(theme?: string) {
   return ({ content }: { content: string }) => {
     return (
       <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
         components={{
           code(props) {
             const { children, className, node, ...rest } = props;
@@ -68,7 +70,7 @@ export function getMarkdown(theme?: string) {
             const { node, ...rest } = props;
             return (
               <th
-                className="border border-border bg-secondary px-3 py-2 text-left font-semibold"
+                className="border border-border bg-gray-800 text-white px-3 py-2 text-left font-semibold"
                 {...rest}
               >
                 {props.children}
@@ -78,10 +80,7 @@ export function getMarkdown(theme?: string) {
           td(props) {
             const { node, ...rest } = props;
             return (
-              <td
-                className="border border-border px-3 py-2"
-                {...rest}
-              >
+              <td className="border border-border px-3 py-2" {...rest}>
                 {props.children}
               </td>
             );
