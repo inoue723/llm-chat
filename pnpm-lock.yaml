@@ -20,28 +20,28 @@ importers:
     dependencies:
       '@ai-sdk/anthropic':
         specifier: 2.0.53
-        version: 2.0.53(zod@4.1.13)
+        version: 2.0.53(zod@4.3.6)
       '@ai-sdk/google':
         specifier: 2.0.44
-        version: 2.0.44(zod@4.1.13)
+        version: 2.0.44(zod@4.3.6)
       '@ai-sdk/openai':
         specifier: 2.0.77
-        version: 2.0.77(zod@4.1.13)
+        version: 2.0.77(zod@4.3.6)
       '@ai-sdk/react':
         specifier: 2.0.107
-        version: 2.0.107(react@19.2.1)(zod@4.1.13)
+        version: 2.0.107(react@19.2.4)(zod@4.3.6)
       '@radix-ui/react-slot':
         specifier: 1.2.4
-        version: 1.2.4(@types/react@19.2.7)(react@19.2.1)
+        version: 1.2.4(@types/react@19.2.14)(react@19.2.4)
       '@react-router/express':
         specifier: 7.9.6
-        version: 7.9.6(express@5.2.1)(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)
+        version: 7.9.6(express@5.2.1)(react-router@7.9.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)
       '@react-router/node':
         specifier: 7.9.6
-        version: 7.9.6(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)
+        version: 7.9.6(react-router@7.9.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)
       ai:
         specifier: 5.1.0-beta.4
-        version: 5.1.0-beta.4(zod@4.1.13)
+        version: 5.1.0-beta.4(zod@4.3.6)
       class-variance-authority:
         specifier: 0.7.1
         version: 0.7.1
@@ -52,17 +52,17 @@ importers:
         specifier: 1.8.1
         version: 1.8.1
       drizzle-orm:
-        specifier: 0.44.7
-        version: 0.44.7(@opentelemetry/api@1.9.0)(@types/pg@8.15.6)(postgres@3.4.7)
+        specifier: 0.45.1
+        version: 0.45.1(@opentelemetry/api@1.9.0)(@types/pg@8.15.6)(postgres@3.4.8)
       express:
         specifier: 5.2.1
         version: 5.2.1
       isbot:
-        specifier: 5.1.32
-        version: 5.1.32
+        specifier: 5.1.35
+        version: 5.1.35
       lucide-react:
         specifier: 0.555.0
-        version: 0.555.0(react@19.2.1)
+        version: 0.555.0(react@19.2.4)
       marked:
         specifier: 16.4.1
         version: 16.4.1
@@ -71,38 +71,38 @@ importers:
         version: 1.10.1
       next-themes:
         specifier: 0.4.6
-        version: 0.4.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+        version: 0.4.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       postgres:
-        specifier: 3.4.7
-        version: 3.4.7
+        specifier: 3.4.8
+        version: 3.4.8
       react:
-        specifier: 19.2.1
-        version: 19.2.1
+        specifier: 19.2.4
+        version: 19.2.4
       react-dom:
-        specifier: 19.2.1
-        version: 19.2.1(react@19.2.1)
+        specifier: 19.2.4
+        version: 19.2.4(react@19.2.4)
       react-markdown:
         specifier: 10.1.0
-        version: 10.1.0(@types/react@19.2.7)(react@19.2.1)
+        version: 10.1.0(@types/react@19.2.14)(react@19.2.4)
       react-router:
         specifier: 7.9.6
-        version: 7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+        version: 7.9.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react-syntax-highlighter:
         specifier: 15.6.6
-        version: 15.6.6(react@19.2.1)
+        version: 15.6.6(react@19.2.4)
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
       tailwind-merge:
-        specifier: 3.4.0
-        version: 3.4.0
+        specifier: 3.5.0
+        version: 3.5.0
       zod:
-        specifier: 4.1.13
-        version: 4.1.13
+        specifier: 4.3.6
+        version: 4.3.6
     devDependencies:
       '@react-router/dev':
         specifier: 7.9.6
-        version: 7.9.6(@types/node@20.19.17)(@vitejs/plugin-rsc@0.4.11(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(vite@7.2.6(@types/node@20.19.17)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)))(jiti@2.6.1)(lightningcss@1.30.2)(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(tsx@4.21.0)(typescript@5.9.3)(vite@7.2.6(@types/node@20.19.17)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
+        version: 7.9.6(@types/node@20.19.17)(@vitejs/plugin-rsc@0.4.11(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.2.6(@types/node@20.19.17)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)))(jiti@2.6.1)(lightningcss@1.30.2)(react-router@7.9.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(tsx@4.21.0)(typescript@5.9.3)(vite@7.2.6(@types/node@20.19.17)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
       '@tailwindcss/vite':
         specifier: 4.1.17
         version: 4.1.17(vite@7.2.6(@types/node@20.19.17)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
@@ -125,11 +125,11 @@ importers:
         specifier: 8.15.6
         version: 8.15.6
       '@types/react':
-        specifier: 19.2.7
-        version: 19.2.7
+        specifier: 19.2.14
+        version: 19.2.14
       '@types/react-dom':
         specifier: 19.2.3
-        version: 19.2.3(@types/react@19.2.7)
+        version: 19.2.3(@types/react@19.2.14)
       '@types/react-syntax-highlighter':
         specifier: 15.5.13
         version: 15.5.13
@@ -1418,8 +1418,8 @@ packages:
   '@types/react-syntax-highlighter@15.5.13':
     resolution: {integrity: sha512-uLGJ87j6Sz8UaBAooU0T6lWJ0dBmjZgN1PZTrj05TNql2/XpC6+4HhMT5syIdFUUt+FASfCeLLv4kBygNU+8qA==}
 
-  '@types/react@19.2.7':
-    resolution: {integrity: sha512-MWtvHrGZLFttgeEj28VXHxpmwYbor/ATPYbBfSFZEIRK0ecCFLl2Qo55z52Hss+UV9CRN7trSeq1zbgx7YDWWg==}
+  '@types/react@19.2.14':
+    resolution: {integrity: sha512-ilcTH/UniCkMdtexkoCN0bI7pMcJDvmQFPvuPvmEaYA/NSfFTAgdUSLAoVjaRJm7+6PvcM+q1zYOwS4wTYMF9w==}
 
   '@types/send@1.2.0':
     resolution: {integrity: sha512-zBF6vZJn1IaMpg3xUF25VK3gd3l8zwE0ZLRX7dsQyQi+jp4E8mMDJNGDYnYse+bQhYwWERTxVwHpi3dMOq7RKQ==}
@@ -1698,8 +1698,8 @@ packages:
     resolution: {integrity: sha512-+CHgPFzuoTQTt7cOYCV6MOw2w8vqEn/ap1yv4bpZOWL03u7rlVRQhUY0WYT3rHsgVTXwYQDZaSUJSQrMBUKuWg==}
     hasBin: true
 
-  drizzle-orm@0.44.7:
-    resolution: {integrity: sha512-quIpnYznjU9lHshEOAYLoZ9s3jweleHlZIAWR/jX9gAWNg/JhQ1wj0KGRf7/Zm+obRrYd9GjPVJg790QY9N5AQ==}
+  drizzle-orm@0.45.1:
+    resolution: {integrity: sha512-Te0FOdKIistGNPMq2jscdqngBRfBpC8uMFVwqjf6gtTVJHIQ/dosgV/CLBU2N4ZJBsXL5savCba9b0YJskKdcA==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=4'
@@ -1961,6 +1961,7 @@ packages:
 
   glob@10.5.0:
     resolution: {integrity: sha512-DfXN8DfhJ7NH3Oe7cFmu3NCu1wKbkReJ8TorzSAFbSKrlNaQSKfIzqYqVY8zlbs2NLBbWpRiU52GX2PbaBVNkg==}
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
     hasBin: true
 
   globrex@0.1.2:
@@ -2074,8 +2075,8 @@ packages:
   is-reference@3.0.3:
     resolution: {integrity: sha512-ixkJoqQvAP88E6wLydLGGqCJsrFUnqoH6HnaczB8XmDH1oaWU+xxdptvikTgaEhtZ53Ky6YXiBuUI2WXLMCwjw==}
 
-  isbot@5.1.32:
-    resolution: {integrity: sha512-VNfjM73zz2IBZmdShMfAUg10prm6t7HFUQmNAEOAVS4YH92ZrZcvkMcGX6cIgBJAzWDzPent/EeAtYEHNPNPBQ==}
+  isbot@5.1.35:
+    resolution: {integrity: sha512-waFfC72ZNfwLLuJ2iLaoVaqcNo+CAaLR7xCpAn0Y5WfGzkNHv7ZN39Vbi1y+kb+Zs46XHOX3tZNExroFUPX+Kg==}
     engines: {node: '>=18'}
 
   isexe@2.0.0:
@@ -2540,8 +2541,8 @@ packages:
     resolution: {integrity: sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ==}
     engines: {node: '>=0.10.0'}
 
-  postgres@3.4.7:
-    resolution: {integrity: sha512-Jtc2612XINuBjIl/QTWsV5UvE8UHuNblcO3vVADSrKsrc6RqGX6lOW1cEo3CM2v0XG4Nat8nI+YM7/f26VxXLw==}
+  postgres@3.4.8:
+    resolution: {integrity: sha512-d+JFcLM17njZaOLkv6SCev7uoLaBtfK86vMUXhW1Z4glPWh4jozno9APvW/XKFJ3CCxVoC7OL38BqRydtu5nGg==}
     engines: {node: '>=12'}
 
   prettier@3.6.2:
@@ -2599,10 +2600,10 @@ packages:
     resolution: {integrity: sha512-K5zQjDllxWkf7Z5xJdV0/B0WTNqx6vxG70zJE4N0kBs4LovmEYWJzQGxC9bS9RAKu3bgM40lrd5zoLJ12MQ5BA==}
     engines: {node: '>= 0.10'}
 
-  react-dom@19.2.1:
-    resolution: {integrity: sha512-ibrK8llX2a4eOskq1mXKu/TGZj9qzomO+sNfO98M6d9zIPOEhlBkMkBUBLd1vgS0gQsLDBzA+8jJBVXDnfHmJg==}
+  react-dom@19.2.4:
+    resolution: {integrity: sha512-AXJdLo8kgMbimY95O2aKQqsz2iWi9jMgKJhRBAxECE4IFxfcazB2LmzloIoibJI3C12IlY20+KFaLv+71bUJeQ==}
     peerDependencies:
-      react: ^19.2.1
+      react: ^19.2.4
 
   react-markdown@10.1.0:
     resolution: {integrity: sha512-qKxVopLT/TyA6BX3Ue5NwabOsAzm0Q7kAPwq6L+wWDwisYs7R8vZ0nRXqq6rkueboxpkjvLGU9fWifiX/ZZFxQ==}
@@ -2629,8 +2630,8 @@ packages:
     peerDependencies:
       react: '>= 0.14.0'
 
-  react@19.2.1:
-    resolution: {integrity: sha512-DGrYcCWK7tvYMnWh79yrPHt+vdx9tY+1gPZa7nJQtO/p8bLTDaHp4dzwEhQB7pZ4Xe3ok4XKuEPrVuc+wlpkmw==}
+  react@19.2.4:
+    resolution: {integrity: sha512-9nfp2hYpCwOjAN+8TZFGhtWEwgvWHXqESH8qT89AT/lWklpLON22Lc8pEtnpsZz7VmawabSU0gCjnj8aC0euHQ==}
     engines: {node: '>=0.10.0'}
 
   read-cmd-shim@5.0.0:
@@ -2803,8 +2804,8 @@ packages:
     peerDependencies:
       react: ^16.11.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  tailwind-merge@3.4.0:
-    resolution: {integrity: sha512-uSaO4gnW+b3Y2aWoWfFpX62vn2sR3skfhbjsEnaBI81WD1wBLlHZe5sWf0AqjksNdYTbGBEd0UasQMT3SNV15g==}
+  tailwind-merge@3.5.0:
+    resolution: {integrity: sha512-I8K9wewnVDkL1NTGoqWmVEIlUcB9gFriAEkXkfCjX5ib8ezGxtR3xD7iZIxrfArjEsH7F1CHD4RFUtxefdqV/A==}
 
   tailwindcss@4.1.17:
     resolution: {integrity: sha512-j9Ee2YjuQqYT9bbRTfTZht9W/ytp5H+jJpZKiYdP/bpnXARAuELt9ofP0lPnmHjbga7SNQIxdTAXCmtKVYjN+Q==}
@@ -2816,6 +2817,7 @@ packages:
   tar@7.5.1:
     resolution: {integrity: sha512-nlGpxf+hv0v7GkWBK2V9spgactGOp0qvfWRxUMjqHyzrt3SgwE48DIv/FhqPHJYLHpgW1opq3nERbz5Anq7n1g==}
     engines: {node: '>=18'}
+    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   throttleit@2.1.0:
     resolution: {integrity: sha512-nt6AMGKW1p/70DF/hGBdJB57B8Tspmbp5gfJ8ilhLnt7kkr2ye7hzD6NVG8GGErk2HWF34igrL2CXmNIkzKqKw==}
@@ -3030,58 +3032,58 @@ packages:
   zimmerframe@1.1.4:
     resolution: {integrity: sha512-B58NGBEoc8Y9MWWCQGl/gq9xBCe4IiKM0a2x7GZdQKOW5Exr8S1W24J6OgM1njK8xCRGvAJIL/MxXHf6SkmQKQ==}
 
-  zod@4.1.13:
-    resolution: {integrity: sha512-AvvthqfqrAhNH9dnfmrfKzX5upOdjUVJYFqNSlkmGf64gRaTzlPwz99IHYnVs28qYAybvAlBV+H7pn0saFY4Ig==}
+  zod@4.3.6:
+    resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
 snapshots:
 
-  '@ai-sdk/anthropic@2.0.53(zod@4.1.13)':
+  '@ai-sdk/anthropic@2.0.53(zod@4.3.6)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.18(zod@4.1.13)
-      zod: 4.1.13
+      '@ai-sdk/provider-utils': 3.0.18(zod@4.3.6)
+      zod: 4.3.6
 
-  '@ai-sdk/gateway@1.1.0-beta.3(zod@4.1.13)':
+  '@ai-sdk/gateway@1.1.0-beta.3(zod@4.3.6)':
     dependencies:
       '@ai-sdk/provider': 2.1.0-beta.0
-      '@ai-sdk/provider-utils': 3.1.0-beta.1(zod@4.1.13)
-      zod: 4.1.13
+      '@ai-sdk/provider-utils': 3.1.0-beta.1(zod@4.3.6)
+      zod: 4.3.6
 
-  '@ai-sdk/gateway@2.0.18(zod@4.1.13)':
+  '@ai-sdk/gateway@2.0.18(zod@4.3.6)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.18(zod@4.1.13)
+      '@ai-sdk/provider-utils': 3.0.18(zod@4.3.6)
       '@vercel/oidc': 3.0.5
-      zod: 4.1.13
+      zod: 4.3.6
 
-  '@ai-sdk/google@2.0.44(zod@4.1.13)':
+  '@ai-sdk/google@2.0.44(zod@4.3.6)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.18(zod@4.1.13)
-      zod: 4.1.13
+      '@ai-sdk/provider-utils': 3.0.18(zod@4.3.6)
+      zod: 4.3.6
 
-  '@ai-sdk/openai@2.0.77(zod@4.1.13)':
+  '@ai-sdk/openai@2.0.77(zod@4.3.6)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.18(zod@4.1.13)
-      zod: 4.1.13
+      '@ai-sdk/provider-utils': 3.0.18(zod@4.3.6)
+      zod: 4.3.6
 
-  '@ai-sdk/provider-utils@3.0.18(zod@4.1.13)':
+  '@ai-sdk/provider-utils@3.0.18(zod@4.3.6)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
       '@standard-schema/spec': 1.0.0
       eventsource-parser: 3.0.6
-      zod: 4.1.13
+      zod: 4.3.6
 
-  '@ai-sdk/provider-utils@3.1.0-beta.1(zod@4.1.13)':
+  '@ai-sdk/provider-utils@3.1.0-beta.1(zod@4.3.6)':
     dependencies:
       '@ai-sdk/provider': 2.1.0-beta.0
       '@standard-schema/spec': 1.0.0
       eventsource-parser: 3.0.6
-      zod: 4.1.13
+      zod: 4.3.6
 
   '@ai-sdk/provider@2.0.0':
     dependencies:
@@ -3091,15 +3093,15 @@ snapshots:
     dependencies:
       json-schema: 0.4.0
 
-  '@ai-sdk/react@2.0.107(react@19.2.1)(zod@4.1.13)':
+  '@ai-sdk/react@2.0.107(react@19.2.4)(zod@4.3.6)':
     dependencies:
-      '@ai-sdk/provider-utils': 3.0.18(zod@4.1.13)
-      ai: 5.0.107(zod@4.1.13)
-      react: 19.2.1
-      swr: 2.3.7(react@19.2.1)
+      '@ai-sdk/provider-utils': 3.0.18(zod@4.3.6)
+      ai: 5.0.107(zod@4.3.6)
+      react: 19.2.4
+      swr: 2.3.7(react@19.2.4)
       throttleit: 2.1.0
     optionalDependencies:
-      zod: 4.1.13
+      zod: 4.3.6
 
   '@ai-sdk/test-server@1.0.0-beta.0': {}
 
@@ -3709,20 +3711,20 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@radix-ui/react-compose-refs@1.1.2(@types/react@19.2.7)(react@19.2.1)':
+  '@radix-ui/react-compose-refs@1.1.2(@types/react@19.2.14)(react@19.2.4)':
     dependencies:
-      react: 19.2.1
+      react: 19.2.4
     optionalDependencies:
-      '@types/react': 19.2.7
+      '@types/react': 19.2.14
 
-  '@radix-ui/react-slot@1.2.4(@types/react@19.2.7)(react@19.2.1)':
+  '@radix-ui/react-slot@1.2.4(@types/react@19.2.14)(react@19.2.4)':
     dependencies:
-      '@radix-ui/react-compose-refs': 1.1.2(@types/react@19.2.7)(react@19.2.1)
-      react: 19.2.1
+      '@radix-ui/react-compose-refs': 1.1.2(@types/react@19.2.14)(react@19.2.4)
+      react: 19.2.4
     optionalDependencies:
-      '@types/react': 19.2.7
+      '@types/react': 19.2.14
 
-  '@react-router/dev@7.9.6(@types/node@20.19.17)(@vitejs/plugin-rsc@0.4.11(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(vite@7.2.6(@types/node@20.19.17)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)))(jiti@2.6.1)(lightningcss@1.30.2)(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(tsx@4.21.0)(typescript@5.9.3)(vite@7.2.6(@types/node@20.19.17)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))':
+  '@react-router/dev@7.9.6(@types/node@20.19.17)(@vitejs/plugin-rsc@0.4.11(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.2.6(@types/node@20.19.17)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)))(jiti@2.6.1)(lightningcss@1.30.2)(react-router@7.9.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(tsx@4.21.0)(typescript@5.9.3)(vite@7.2.6(@types/node@20.19.17)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))':
     dependencies:
       '@babel/core': 7.28.5
       '@babel/generator': 7.28.5
@@ -3732,7 +3734,7 @@ snapshots:
       '@babel/traverse': 7.28.5
       '@babel/types': 7.28.5
       '@npmcli/package-json': 4.0.1
-      '@react-router/node': 7.9.6(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)
+      '@react-router/node': 7.9.6(react-router@7.9.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)
       '@remix-run/node-fetch-server': 0.9.0
       arg: 5.0.2
       babel-dead-code-elimination: 1.0.10
@@ -3740,7 +3742,7 @@ snapshots:
       dedent: 1.7.0
       es-module-lexer: 1.7.0
       exit-hook: 2.2.1
-      isbot: 5.1.32
+      isbot: 5.1.35
       jsesc: 3.0.2
       lodash: 4.17.21
       p-map: 7.0.4
@@ -3748,14 +3750,14 @@ snapshots:
       picocolors: 1.1.1
       prettier: 3.6.2
       react-refresh: 0.14.2
-      react-router: 7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+      react-router: 7.9.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       semver: 7.7.3
       tinyglobby: 0.2.15
       valibot: 1.2.0(typescript@5.9.3)
       vite: 7.2.6(@types/node@20.19.17)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)
       vite-node: 3.2.4(@types/node@20.19.17)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)
     optionalDependencies:
-      '@vitejs/plugin-rsc': 0.4.11(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(vite@7.2.6(@types/node@20.19.17)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
+      '@vitejs/plugin-rsc': 0.4.11(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.2.6(@types/node@20.19.17)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
       typescript: 5.9.3
     transitivePeerDependencies:
       - '@types/node'
@@ -3773,18 +3775,18 @@ snapshots:
       - tsx
       - yaml
 
-  '@react-router/express@7.9.6(express@5.2.1)(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)':
+  '@react-router/express@7.9.6(express@5.2.1)(react-router@7.9.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)':
     dependencies:
-      '@react-router/node': 7.9.6(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)
+      '@react-router/node': 7.9.6(react-router@7.9.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)
       express: 5.2.1
-      react-router: 7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+      react-router: 7.9.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
     optionalDependencies:
       typescript: 5.9.3
 
-  '@react-router/node@7.9.6(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)':
+  '@react-router/node@7.9.6(react-router@7.9.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)':
     dependencies:
       '@mjackson/node-fetch-server': 0.2.0
-      react-router: 7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+      react-router: 7.9.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
     optionalDependencies:
       typescript: 5.9.3
 
@@ -3997,15 +3999,15 @@ snapshots:
 
   '@types/range-parser@1.2.7': {}
 
-  '@types/react-dom@19.2.3(@types/react@19.2.7)':
+  '@types/react-dom@19.2.3(@types/react@19.2.14)':
     dependencies:
-      '@types/react': 19.2.7
+      '@types/react': 19.2.14
 
   '@types/react-syntax-highlighter@15.5.13':
     dependencies:
-      '@types/react': 19.2.7
+      '@types/react': 19.2.14
 
-  '@types/react@19.2.7':
+  '@types/react@19.2.14':
     dependencies:
       csstype: 3.2.3
 
@@ -4026,15 +4028,15 @@ snapshots:
 
   '@vercel/oidc@3.0.5': {}
 
-  '@vitejs/plugin-rsc@0.4.11(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(vite@7.2.6(@types/node@20.19.17)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))':
+  '@vitejs/plugin-rsc@0.4.11(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.2.6(@types/node@20.19.17)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))':
     dependencies:
       '@mjackson/node-fetch-server': 0.7.0
       es-module-lexer: 1.7.0
       estree-walker: 3.0.3
       magic-string: 0.30.21
       periscopic: 4.0.2
-      react: 19.2.1
-      react-dom: 19.2.1(react@19.2.1)
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
       turbo-stream: 3.1.0
       vite: 7.2.6(@types/node@20.19.17)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)
       vitefu: 1.1.1(vite@7.2.6(@types/node@20.19.17)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
@@ -4047,22 +4049,22 @@ snapshots:
 
   agent-base@7.1.4: {}
 
-  ai@5.0.107(zod@4.1.13):
+  ai@5.0.107(zod@4.3.6):
     dependencies:
-      '@ai-sdk/gateway': 2.0.18(zod@4.1.13)
+      '@ai-sdk/gateway': 2.0.18(zod@4.3.6)
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.18(zod@4.1.13)
+      '@ai-sdk/provider-utils': 3.0.18(zod@4.3.6)
       '@opentelemetry/api': 1.9.0
-      zod: 4.1.13
+      zod: 4.3.6
 
-  ai@5.1.0-beta.4(zod@4.1.13):
+  ai@5.1.0-beta.4(zod@4.3.6):
     dependencies:
-      '@ai-sdk/gateway': 1.1.0-beta.3(zod@4.1.13)
+      '@ai-sdk/gateway': 1.1.0-beta.3(zod@4.3.6)
       '@ai-sdk/provider': 2.1.0-beta.0
-      '@ai-sdk/provider-utils': 3.1.0-beta.1(zod@4.1.13)
+      '@ai-sdk/provider-utils': 3.1.0-beta.1(zod@4.3.6)
       '@ai-sdk/test-server': 1.0.0-beta.0
       '@opentelemetry/api': 1.9.0
-      zod: 4.1.13
+      zod: 4.3.6
 
   ansi-regex@5.0.1: {}
 
@@ -4269,11 +4271,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.44.7(@opentelemetry/api@1.9.0)(@types/pg@8.15.6)(postgres@3.4.7):
+  drizzle-orm@0.45.1(@opentelemetry/api@1.9.0)(@types/pg@8.15.6)(postgres@3.4.8):
     optionalDependencies:
       '@opentelemetry/api': 1.9.0
       '@types/pg': 8.15.6
-      postgres: 3.4.7
+      postgres: 3.4.8
 
   dunder-proto@1.0.1:
     dependencies:
@@ -4680,7 +4682,7 @@ snapshots:
       '@types/estree': 1.0.8
     optional: true
 
-  isbot@5.1.32: {}
+  isbot@5.1.35: {}
 
   isexe@2.0.0: {}
 
@@ -4768,9 +4770,9 @@ snapshots:
 
   lru-cache@7.18.3: {}
 
-  lucide-react@0.555.0(react@19.2.1):
+  lucide-react@0.555.0(react@19.2.4):
     dependencies:
-      react: 19.2.1
+      react: 19.2.4
 
   magic-string@0.30.21:
     dependencies:
@@ -5168,10 +5170,10 @@ snapshots:
 
   negotiator@1.0.0: {}
 
-  next-themes@0.4.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1):
+  next-themes@0.4.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
-      react: 19.2.1
-      react-dom: 19.2.1(react@19.2.1)
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
 
   node-domexception@1.0.0: {}
 
@@ -5305,7 +5307,7 @@ snapshots:
     dependencies:
       xtend: 4.0.2
 
-  postgres@3.4.7: {}
+  postgres@3.4.8: {}
 
   prettier@3.6.2: {}
 
@@ -5348,21 +5350,21 @@ snapshots:
       iconv-lite: 0.7.0
       unpipe: 1.0.0
 
-  react-dom@19.2.1(react@19.2.1):
+  react-dom@19.2.4(react@19.2.4):
     dependencies:
-      react: 19.2.1
+      react: 19.2.4
       scheduler: 0.27.0
 
-  react-markdown@10.1.0(@types/react@19.2.7)(react@19.2.1):
+  react-markdown@10.1.0(@types/react@19.2.14)(react@19.2.4):
     dependencies:
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
-      '@types/react': 19.2.7
+      '@types/react': 19.2.14
       devlop: 1.1.0
       hast-util-to-jsx-runtime: 2.3.6
       html-url-attributes: 3.0.1
       mdast-util-to-hast: 13.2.0
-      react: 19.2.1
+      react: 19.2.4
       remark-parse: 11.0.0
       remark-rehype: 11.1.2
       unified: 11.0.5
@@ -5373,25 +5375,25 @@ snapshots:
 
   react-refresh@0.14.2: {}
 
-  react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1):
+  react-router@7.9.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
       cookie: 1.1.0
-      react: 19.2.1
+      react: 19.2.4
       set-cookie-parser: 2.7.2
     optionalDependencies:
-      react-dom: 19.2.1(react@19.2.1)
+      react-dom: 19.2.4(react@19.2.4)
 
-  react-syntax-highlighter@15.6.6(react@19.2.1):
+  react-syntax-highlighter@15.6.6(react@19.2.4):
     dependencies:
       '@babel/runtime': 7.28.4
       highlight.js: 10.7.3
       highlightjs-vue: 1.0.0
       lowlight: 1.20.0
       prismjs: 1.30.0
-      react: 19.2.1
+      react: 19.2.4
       refractor: 3.6.0
 
-  react@19.2.1: {}
+  react@19.2.4: {}
 
   read-cmd-shim@5.0.0: {}
 
@@ -5627,13 +5629,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  swr@2.3.7(react@19.2.1):
+  swr@2.3.7(react@19.2.4):
     dependencies:
       dequal: 2.0.3
-      react: 19.2.1
-      use-sync-external-store: 1.6.0(react@19.2.1)
+      react: 19.2.4
+      use-sync-external-store: 1.6.0(react@19.2.4)
 
-  tailwind-merge@3.4.0: {}
+  tailwind-merge@3.5.0: {}
 
   tailwindcss@4.1.17: {}
 
@@ -5727,9 +5729,9 @@ snapshots:
       escalade: 3.2.0
       picocolors: 1.1.1
 
-  use-sync-external-store@1.6.0(react@19.2.1):
+  use-sync-external-store@1.6.0(react@19.2.4):
     dependencies:
-      react: 19.2.1
+      react: 19.2.4
 
   valibot@1.2.0(typescript@5.9.3):
     optionalDependencies:
@@ -5844,6 +5846,6 @@ snapshots:
   zimmerframe@1.1.4:
     optional: true
 
-  zod@4.1.13: {}
+  zod@4.3.6: {}
 
   zwitch@2.0.4: {}
